@@ -1,0 +1,8 @@
+.Wdate{
+	width: 90px;
+	height:16px;
+	background: url(calendar.png) no-repeat right center #fff;
+	text-indent: 1px;
+	border: 1px solid #e2e3ea;
+	border-top: 1px solid #abadb3;
+}

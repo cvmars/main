@@ -1,0 +1,474 @@
+@charset "utf-8";
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, textarea {
+    font: 12px/1.5 "微软雅黑","宋体",tahoma,arial,sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+}
+address, cite, dfn, em, var {
+    font-style: normal;
+}
+code, kbd, pre, samp {
+    font-family: courier new,courier,monospace;
+}
+small {
+    font-size: 12px;
+}
+ul, ol {
+    list-style: outside none none;
+}
+a, a:hover {
+    font-family: simsun;
+    outline: medium none;
+    text-decoration: none;
+}
+sup {
+    vertical-align: text-top;
+}
+sub {
+    vertical-align: text-bottom;
+}
+legend {
+    color: #000;
+}
+fieldset, img {
+    border: 0 none;
+}
+button, input, select, textarea {
+    font-size: 100%;
+    outline: medium none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.clearfix {
+    height: 1%;
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+body {
+    background-color: #fff;
+    overflow-x: hidden;
+    padding: 20px 50px;
+}
+
+h2{
+    margin-bottom: 5px;
+}
+.separate{
+    margin-bottom: 12px;
+}
+.separate2{
+    margin-bottom: 20px;
+}
+/* tab选项切换卡 */
+.ui_tab {
+    overflow: hidden;
+}
+.ui_tab .ui_tab_nav {
+    height: 35px;
+    margin-bottom: -2px;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+.ui_tab .ui_tab_nav li {
+    float: left;
+}
+.ui_tab .ui_tab_nav a {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #f7f7f7;
+    border-color: #ddd -moz-use-text-color #ddd #ddd;
+    border-image: none;
+    border-style: solid none solid solid;
+    border-width: 1px 0 1px 1px;
+    display: block;
+    font-size: 14px;
+    padding: 5px 14px 6px;
+}
+.ui_tab .ui_tab_nav .last a {
+    border-right: 1px solid #ddd;
+}
+.ui_tab .ui_tab_nav .active a {
+    background: none repeat scroll 0 0 #fff;
+    border-bottom: 0 none;
+    color: #f22e00;
+    padding-bottom: 7px;
+}
+.ui_tab .ui_tab_content {
+    border: 1px solid #ddd;
+}
+.ui_tab .ui_tab_content .ui_panel {
+    display: none;
+    padding: 25px 20px;
+}
+/* end tab选项切换卡 */
+
+
+/* 下拉框 */
+.zSelect {
+    border: 1px solid #ddd;
+    height: 30px;
+    line-height: 30px;
+    width: 120px;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+    position: relative;
+    font-family: "宋体";
+}
+.zSelect .totop i {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: none;
+    border-top: 6px solid;
+}
+.zSelect i {
+    border-bottom: 6px solid;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    color: #6c6c6c;
+    content: "";
+    display: inline-block;
+    height: 0;
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    vertical-align: middle;
+    width: 0;
+}
+.zSelect .options {
+    display: none;
+    position: absolute;
+    left: -1px;
+    background: #fff;
+    z-index: 1;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-top: 0;
+}
+.zSelect .options a {
+    color: #666;
+}
+.zSelect .options a:hover {
+    text-decoration: none;
+    color: #f22e00;
+}
+.zSelect .options .active {
+    background: #eee;
+}
+.zSelect li {
+    width: 120px;
+    padding-right: 20px;
+}
+/* end 下拉框 */
+
+/*弹出框自定义*/
+.aui_border {
+  border: 1px solid #ddd;
+}
+.aui_nw,
+.aui_ne,
+.aui_sw,
+.aui_se {
+  width: 8px;
+  height: 8px;
+}
+.aui_nw,
+.aui_ne,
+.aui_sw,
+.aui_se {
+  width: 0px;
+  height: 0px;
+}
+.aui_state_focus .aui_title {
+  font-family: 宋体;
+  height: auto;
+  font-weight: bold;
+  line-height: 20px;
+  border: 0 none;
+  color: #fff;
+  text-shadow: none;
+  background: #3083eb none;
+  padding: 8px 15px 4px;
+  background: linear-gradient(top, #3083eb, #3083eb);
+  background: -moz-linear-gradient(top, #3083eb, #3083eb);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#3083eb), to(#3083eb));
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3083eb', endColorstr='#3083eb');
+}
+.aui_close {
+  padding: 0;
+  top: 10px;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  background: url(../img/btn.png) -71px 0 no-repeat;
+  text-indent: -9999px;
+}
+.aui_close:hover {
+  background: url(../img/btn.png) -71px -19px no-repeat;
+}
+.aui_buttons {
+  border: 0 none;
+  background: none;
+  text-align: center;
+  padding: 0;
+  height: 48px;
+}
+.aui_buttons button {
+  margin-left: 0;
+  padding: 6px 8px;
+  cursor: pointer;
+  display: inline-block;
+  border: 0 none;
+  text-align: center;
+  background: url("../img/order/bt-bg.png") -118px -147px no-repeat;
+  font-family: Tahoma, Arial / 9 !important;
+}
+.aui_buttons button.artbtn_save {
+  text-shadow: none;
+  padding: 0px;
+  box-shadow: none;
+  border: 0 none;
+  color: #fff;
+  border-radius: 0px;
+  width: 52px;
+  height: 24px;
+  line-height: 22px;
+  overflow: hidden;
+  margin-right: 30px;
+  background: url("../img/btn.png") -118px -174px no-repeat;
+}
+.aui_buttons button.artbtn_save:hover {
+  background-position: -118px -199px;
+}
+.aui_buttons button.artbtn_cancel {
+  text-shadow: none;
+  padding: 0px;
+  box-shadow: none;
+  border: 0 none;
+  border-radius: 0px;
+  width: 52px;
+  height: 24px;
+  line-height: 22px;
+  overflow: hidden;
+  background: url("../img/btn.png") -118px -124px no-repeat;
+}
+.aui_buttons button.artbtn_cancel:hover {
+  background-position: -118px -149px;
+}
+/*弹出框自添加*/
+.dialog .tcenter {
+  text-align: center!important;
+}
+.dialog .pull_left {
+  float: left!important;
+}
+.dialog .pull_right {
+  float: right!important;
+}
+.dialog .vtop {
+  vertical-align: top;
+}
+.dialog .w50 {
+  width: 50px;
+}
+.dialog .w62 {
+  width: 62px;
+}
+.dialog .w124 {
+  width: 124px;
+  padding-right: 30px;
+}
+.dialog .putform {
+  width: 100%;
+  border-collapse: collapse;
+}
+.dialog .putform th {
+  font-weight: normal;
+}
+.dialog .c_txt {
+  font-size: 14px;
+}
+.dialog .p_form {
+  padding-top: 15px;
+}
+.dialog .txt {
+  border: 1px solid #edeef1;
+  height: 20px;
+  color: #3c3c3c;
+  width: 266px;
+  padding: 2px 5px;
+}
+.dialog .txt:focus {
+  border-color: #ddd;
+  color: #5e5e5f;
+}
+.dialog .dialog_tit {
+  color: #666;
+}
+.dialog .upload_con {
+  border: 1px solid #dadadc;
+  margin: 10px auto;
+  background: #fafbfe;
+  width: 588px;
+  height: 254px;
+  overflow-y: auto;
+}
+.dialog .upload_before {
+  text-align: center;
+  color: #9c9c9c;
+  margin-top: 73px;
+}
+.dialog .upload_before .upload_btn {
+  cursor: pointer;
+  display: block;
+  background: url("../img/btn.png") 0 -248px no-repeat;
+  width: 170px;
+  height: 44px;
+  line-height: 44px;
+  margin: 0 auto;
+}
+.dialog .upload_before .upload_btn:hover {
+  background-position: 0 -293px;
+}
+.dialog .upload_before .p1 {
+  padding-top: 7px;
+}
+.dialog .upload_before .p2 {
+  font-size: 14px;
+  padding-top: 10px;
+}
+.dialog .upload_before .p2 .num {
+  color: #adb3c1;
+  font-weight: bold;
+  margin: 0 5px;
+  font-family: tahoma;
+}
+.dialog .hide {
+  display: none;
+}
+.dialog .done {
+  background: url(../img/btn.png) -98px 0 no-repeat;
+  color: #3c3c3c;
+  width: 72px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  text-align: center;
+}
+.dialog .done:hover {
+  color: #fff;
+  background-position: -98px -31px;
+  text-decoration: none;
+}
+.dialog label {
+  vertical-align: middle;
+}
+.dialog label input {
+  vertical-align: middle;
+  margin-right: 10px;
+  margin-top: -2px;
+}
+.dialog .add_water {
+  margin-top: 10px;
+}
+.dialog .upload_txt {
+  border-top: 1px solid #ddd;
+  color: #9c9c9c;
+  padding: 14px 16px 0px;
+  margin-top: 10px;
+  width: 590px;
+  margin-left: -16px;
+}
+.dialog .upload_txt td,
+.dialog .upload_txt p {
+  color: #9c9c9c;
+}
+.dialog .upload_after .upload_item {
+  padding: 10px 8px;
+  border-top: 1px solid #e4e5e9;
+  margin-top: -1px;
+}
+.dialog .upload_after .upload_item .pic_name {
+  color: #3f4d72;
+  font-weight: bold;
+  padding-left: 20px;
+  margin-bottom: 4px;
+}
+.dialog .upload_after .upload_item .ucon {
+  padding-left: 20px;
+  color: #8f99b2;
+}
+.dialog .upload_after .upload_item .ucon p {
+  margin-top: 3px;
+}
+.dialog .upload_after .upload_done .pic_name {
+  background: url(../img/pic_name.png) 0px 2px no-repeat;
+}
+.dialog .upload_after .upload_doing .pic_name {
+  background: none;
+}
+.dialog .upload_after .upload_doing .progess {
+  height: 15px;
+  line-height: 15px;
+}
+.dialog .upload_after .upload_doing .progess .progess_line {
+  width: 445px;
+  height: 12px;
+  border: 1px solid #d9ece0;
+  background: #e7f3eb;
+}
+.dialog .upload_after .upload_doing .progess .progessing {
+  height: 12px;
+  background: #61c981;
+}
+.dialog .upload_after .upload_doing .progess_num {
+  margin-left: 12px;
+  color: #333;
+}
+.dialog .upload_after .upload_doing .upload_cancel {
+  margin-left: 23px;
+  color: #3083eb;
+  text-decoration: none;
+  cursor: pointer;
+}
+.dialog .label_name {
+  height: 26px;
+  line-height: 26px;
+  float: left;
+}
+.dialog .p_placeholder {
+  float: left;
+  position: relative;
+}
+.dialog .p_placeholder .replace_placeholder {
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  *top: 5px;
+  color: #9c9c9c;
+}
