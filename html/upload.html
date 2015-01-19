@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>upload</title>
+    <style>
+    .wrap .btn_upload {
+        display: block;
+        width: 115px;
+        height: 30px;
+        overflow: hidden;
+    }
+    .wrap .btn_upload img {
+        margin-top: -124px;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+
+        <form action="" method="post" name="form" id="form">
+
+            <input type="file" name="fileField" id="fileField" style="display:none;" />
+
+            <a href="javascript:;" class="btn_upload" id="btnUpload">
+                <img src="img/btn.png" alt="">
+            </a>
+
+        </form>
+
+    </div>
+
+    <script src="js/jquery/jquery-1.10.2.min.js"></script>
+    <script>
+    ;
+    (function() {
+
+        var obj = {
+
+            init: function() {
+
+                this.bindEvent();
+
+            },
+
+            bindEvent: function() {
+
+                var $wrap = $(".wrap");
+
+                var $fileField = $("#fileField");
+
+                //----------------事件绑定列表---------------------//
+
+                //上传
+                $wrap.on("click", "#btnUpload", uploadFile);
+
+                //file change
+                $fileField.on("change", changeFunc);
+
+                //-----------------函数方法体-----------------------//
+
+                //上传
+                function uploadFile() {
+
+                    $fileField.click();
+
+                }
+
+                //change();
+                function changeFunc() {
+
+                    alert(1);
+
+                }
+
+
+            }
+
+        }
+
+        //页面ready
+        $(function() {
+
+            obj.init();
+
+        });
+
+
+    })(window);
+    </script>
+
+</body>
+
+</html>
