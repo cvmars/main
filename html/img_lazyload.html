@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>upload对对对</title>
+    <style>
+    .wrap .btn_upload {
+        display: block;
+        width: 115px;
+        height: 30px;
+        overflow: hidden;
+    }
+    .wrap .btn_upload img {
+        margin-top: -124px;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div class="main">
+        222
+    </div>
+
+
+    <script>
+    /**
+     * ¿ØÖÆÒ³ÃæÉÏµÄImage£¬Ê¹ÆäÄÜ¹»½øÐÐÑÓ³Ù¼ÓÔØ
+     * @author      zhaoxianlie
+     * @homepage    http://www.baidufe.com/component/image-lazyload/index.html
+     */
+    var ImageLazyload = (function($, undefined) {
+
+        var _timeoutId = 0;
+        var _dataSrcImgStack = [];
+
+        /**
+         * Ä¬ÈÏÅäÖÃ
+         * @type {Object}
+         */
+        var userOptions = {
+            offset: 0, // ´¦ÓÚÆÁÄ»Ö®ÍâoffsetÏñËØµÄÍ¼Æ¬ÒÀÈ»¼ÓÔØ
+            container: document.body,
+            callback: null // Ã¿ÕÅÍ¼Æ¬¼ÓÔØÍê³ÉºóÖ´ÐÐµÄ»Øµ÷·½·¨
+        };
+
+        /**
+         * ÅÐ¶Ïµ±Ç°imgÊÇ·ñÔÚÆÁÏÔ·¶Î§£¨¿ÉÊÓÇøÓò£©Ö®ÄÚ
+         * @param   {Object}    elm jQuery·â×°µÄ&lt;img/&gt;½Úµã¶ÔÏó£¨µ¥¸ö£©
+         * @return  {Boolean}   Í¼Æ¬¿É¼û·µ»Øtrue£¬·ñÔò·µ»Øfalse
+         */
+        var _isVisible = function(elm) {
+            elm = $(elm);
+            var offset = userOptions.offset ? 0 : 60;
+            var elmPos = {};
+            try {
+                elmPos = elm.offset();
+            } catch (e) {
+                elmPos = {
+                    left: 0,
+                    top: 0
+                };
+            }
+            var scrollTop = $(window).scrollTop();
+            var scrollLeft = $(window).scrollLeft();
+            var viewWidth = $(window).width();
+            var viewHeight = $(window).height();
+            var elmHeight = elm[0].offsetHeight == 1 ? elm.parent()[0].offsetHeight : elm[0].offsetHeight;
+            var elmWidth = elm[0].offsetWidth == 1 ? elm.parent()[0].offsetWidth : elm[0].offsetWidth;
+
+            //¾ØÐÎËÄ¸ö½Ç£¬´Ó×óÉÏAµãË³Ê±Õë¼ÇÂ¼Îª£ºA(xa,ya)¡¢B(xb,yb)¡¢C(xc,yc)¡¢D(xd,yd)
+            //¶ÔÓ¦µÄ´°¿ÚËÄ¸ö½ÇÎªA1(xa1,ya1),¡¢B1(xb1,yb1)¡¢C1(xc1,yc1)¡¢D1(xd1,yd1)
+            var xa, xb, xc, xd, ya, yb, yc, yd,
+                xa1, xb1, ya1, yd1;
+            xa = xd = elmPos.left;
+            ya = yb = elmPos.top;
+            xb = xc = elmPos.left + elmWidth;
+            yc = yd = elmPos.top + elmHeight;
+            xa1 = scrollLeft - offset;
+            ya1 = scrollTop - offset;
+            xb1 = scrollLeft + viewWidth + offset;
+            yd1 = scrollTop + viewHeight + offset;
+
+            return (xa1 <= xa && xa <= xb1 && ya1 <= ya && ya <= yd1) // Aµã
+                || (xa1 <= xb && xb <= xb1 && ya1 <= yb && yb <= yd1) // Bµã
+                || (xa1 <= xc && xc <= xb1 && ya1 <= yc && yc <= yd1) // Cµã
+                || (xa1 <= xd && xd <= xb1 && ya1 <= yd && yd <= yd1); // Dµã
+        };
+
+        /**
+         * ÅÐ¶Ïµ±Ç°imgÊÇ·ñÒÑ¾­¼ÓÔØÍê³É
+         * @param {Object} elm
+         */
+        var _isImageLoadCompleted = function(elm) {
+            return (elm.attr('data-loaded') == '1');
+        };
+
+        /**
+         * Ö¸¶¨Ä³Í¼Æ¬½Úµã£¬²¢Ç¿ÖÆ¼ÓÔØ
+         * @param   {Object}    elm jQuery·â×°µÄ&lt;img/&gt;½Úµã¶ÔÏó£¨µ¥¸ö£©
+         */
+        var _load = function(elm) {
+            elm = $(elm);
+            if (_isImageLoadCompleted(elm)) return;
+
+            if (elm.attr('data-loadfunc') != '1') {
+                elm.attr('data-loadfunc', 1);
+                elm.ready(function(evt) {
+                    var $self = $(this);
+                    $self.attr('data-loaded', 1);
+
+                    // Ö´ÐÐ»Øµ÷
+                    if (userOptions.callback && typeof userOptions.callback === 'function') {
+                        userOptions.callback(elm);
+                    }
+                });
+            }
+            var src = elm.attr('data-src') || '';
+            if (src.indexOf('http') > -1) {
+                elm.attr('src', src);
+                elm[0].removeAttribute('data-src');
+            }
+        };
+
+        /**
+         * ½«µ±Ç°imgµÄdata-src¸³Öµ¸øsrc£¬ÒÔ´ËÊµÏÖÍ¼Æ¬ÑÓ³Ù¼ÓÔØ
+         */
+        var _renderImage = function() {
+            // ±éÀúµ±Ç°Í¼Æ¬ÁÐ±í£¬Öð¸öÅÐ¶Ï²¢¼ÓÔØ
+            $.each(_dataSrcImgStack, function(i, elm) {
+                elm = $(elm);
+                //img±êÇ©¿É¼û²¢ÇÒ¼ÓÔØÎ´Íê³É
+                if (!_isImageLoadCompleted(elm) && _isVisible(elm)) {
+                    _load(elm);
+                }
+            });
+
+            // ¸üÐÂÍ¼Æ¬ÁÐ±í£¬Ìß³öÒÑ¼ÓÔØ³É¹¦µÄÍ¼Æ¬
+            var newImgStack = [];
+            $.each(_dataSrcImgStack, function(i, elm) {
+                elm = $(elm);
+                //img±êÇ©¿É¼û²¢ÇÒ¼ÓÔØÎ´Íê³É
+                if (!_isImageLoadCompleted(elm)) {
+                    newImgStack.push(elm);
+                }
+            });
+            _dataSrcImgStack = newImgStack;
+        };
+
+
+        /**
+         * É¨ÃèÒ³ÃæÉÏËùÓÐµÄimg±êÇ©²¢äÖÈ¾
+         * @param {Object} newDom
+         */
+        var _scanAndDoRender = function() {
+            var elContainer = $(userOptions.container);
+            var isScanAll = false;
+            if (elContainer.is(document.body)) {
+                isScanAll = true;
+            }
+
+            //É¨Ãè
+            var imgList = [];
+            $.each($('img[data-src]', elContainer), function(i, elm) {
+                elm = $(elm);
+                if (!_isImageLoadCompleted(elm)) {
+                    imgList.push(elm);
+                }
+            });
+
+            //ÐÂ½ÚµãÈëÕ»
+            if (isScanAll) {
+                _dataSrcImgStack = imgList;
+            } else {
+                _dataSrcImgStack = _dataSrcImgStack.concat(imgList);
+            }
+
+            //±éÀú
+            _renderImage();
+        };
+
+        /**
+         * ¸øÒ³ÃæÔö¼Ó¹ö¶¯Ìõ¼àÌý
+         */
+        var _bindScrollEvent = function() {
+
+            $.each(['resize', 'scroll', 'ready'], function(i, evtName) {
+                $(window).bind(evtName, function(e) {
+                    if (_timeoutId) {
+                        window.clearTimeout(_timeoutId);
+                    }
+                    _timeoutId = window.setTimeout(function() {
+                        _timeoutId = 0;
+                        _scanAndDoRender();
+                    }, 20);
+
+                    e.stopPropagation();
+                });
+            });
+
+        };
+
+
+        /**
+         * ³õÊ¼»¯²¢Æô¶¯lazyload×é¼þ
+         * @param       {Object}    options     ³õÊ¼»¯ËùÐèÅäÖÃ
+         * @p-config    {Integer}   offset      ´¦ÓÚÆÁÄ»Ö®ÍâoffsetÏñËØµÄÍ¼Æ¬ÒÀÈ»¼ÓÔØ£¬Ä¬ÈÏ£º60
+         * @p-config    {jQ-Elm}    container   ¼ÓÔØÖ¸¶¨HTML½ÚµãÄÚµÄÍ¼Æ¬£¬Ä¬ÈÏ£ºdocument.body
+         * @p-config    {function}  callback    Ã¿ÕÅÍ¼Æ¬¼ÓÔØÍê³ÉºóµÄ»Øµ÷£¬Ä¬ÈÏ£ºnull
+         */
+        var _init = function(options) {
+            userOptions = $.extend(userOptions, options);
+
+            //É¨Ãè²¢³õÊ¼»¯Ò³Ãæ
+            _scanAndDoRender();
+            //¸øÒ³ÃæÔö¼Ó¹ö¶¯Ìõ¼àÌý
+            _bindScrollEvent();
+
+        };
+
+        return {
+            init: _init,
+            visible: _isVisible,
+            load: _load
+        };
+    })(jQuery);
+    </script>
+</body>
+
+</html>
