@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>原型链</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+
+
+    </div>
+
+    <script src="../static/js/lib/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script>
+       var toString = Object.prototype.toString;
+       function getType(o){
+
+            return toString.call(o).slice(8,-1);
+
+       }
+
+       function log(arg){
+           if(window.console){
+                console.log(arg);
+           }
+       }
+
+       log(toString.call(null));  //[object Null]
+       log(getType(null)); //"Null"
+       log(getType(undefined)); //"Undefined"
+       log(getType(1)); //"Number"
+       log(getType(new Number(1))); //"Number"
+       log(typeof new Number(1)); //"object"
+       log(getType(true)); //"Boolean"
+       log(getType(new Boolean(true))); //"Boolean"
+
+
+       var obj = {
+            o:{
+                a:1,
+                b:2,
+                toJSON:function(){
+                    return this.a + this.b
+                }
+            }
+       }
+
+       log(obj);
+       log(JSON.stringify(obj));
+
+       log("--------------------------");
+
+       var obj2 = {
+        a:1,
+        b:2
+       }
+
+       obj2.toString();
+
+       obj2.toString = function(){
+        return this.a +this.b;
+       }
+
+       log("Result"+obj2);
+
+
+    </script>
+    <script>
+    ;
+    (function() {
+
+        var obj = {
+
+            init: function() {
+
+
+
+            },
+
+            bindEvent: function() {
+
+
+
+
+            }
+
+        }
+
+        //页面ready
+        $(function() {
+
+
+
+        });
+
+
+    })(window);
+    </script>
+
+
+</body>
+
+</html>
