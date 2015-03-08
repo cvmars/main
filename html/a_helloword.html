@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>angularjs hello word</title>
+</head>
+<body>
+
+    <div ng-controller="HelloAngular">
+        <p>{{greeting.text}},Angular</p>
+    </div>
+    
+    <div ng-controller="GreetCtrl">
+        hello {{name}}!
+    </div>
+
+    <div class="msg-list" ng-controller="listCtrl">
+        <ul>
+            <li ng-repeat="name in names">
+                {{name}} from {{department}}
+            </li>
+        </ul>
+    </div>
+
+    <script src="../static/js/lib/angularjs/angular.js"></script>
+    
+    <script>
+    // 1 暴露到window下了
+    // function HelloAngular($scope){
+
+    //     $scope.greeting = {text:"hello"};
+
+    // }
+    // 2使用 module
+    // var myModule = angular.module("HelloAngular",[]);
+    // myModule.controller("HelloAngular",['$scope',function HelloAngular($scope){
+    //     $scope.greeting = {text:"hello"};
+    // }]);
+
+    function GreetCtrl($scope,$rootScope){
+
+        $scope.name = "Word";
+
+        $rootScope.department = "Angular";
+
+    }
+
+    function listCtrl($scope){
+
+        $scope.names = ["ye1","ye2","ye3"];
+
+    }
+
+
+    </script>
+</body>
+</html>
