@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html ng-app>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>angularjs hello word</title>
+    <style>
+    .line {
+        margin: 10px 0;
+        color: #f60;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div ng-controller="HelloAngular">
+        <p>{{greeting.text}},Angular</p>
+    </div>
+
+    <div ng-controller="GreetCtrl">
+        hello {{name}}!
+    </div>
+
+    <div class="msg-list" ng-controller="listCtrl">
+        <ul>
+            <li ng-repeat="name in names">
+                {{name}} from {{department}}
+            </li>
+        </ul>
+    </div>
+
+
+    <div ng-controller="InvoiceCntl">
+        <b>Invoice:</b>
+        <br>
+        <br>
+        <table>
+            <tr>
+                <td>Quantity</td>
+                <td>Cost</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="integer" min="0" ng-model="qty" required>
+                </td>
+                <td>
+                    <input type="number" ng-model="cost" required>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <b>Total:</b> {{qty * cost | currency}}
+        <p>I can add: {{ 1+2 }}</p>
+    </div>
+
+    <!-- 指令 -->
+    <span ng-bind="exp"></span>
+    <span class="ng-bind: exp;"></span>
+    <ng-bind></ng-bind>
+    <!-- directive: ng-bind exp -->
+
+    <!-- 让元素变的可拖拽指令 -->
+    <span draggable style="display:block;padding:10px;border:1px solid #ddd;float:left;">Drag ME</span>
+    <!-- / 让元素变的可拖拽指令 -->
+
+    <p ng-init="name='World'">Hello {{name}}!</p>
+
+    <input ng-model="name">
+    <p>Hello {{name}}!</p>
+
+    <div ng-controller="MyCtrl">
+        Hello {{name}}!
+        <button ng-click="action()">
+            OK
+        </button>
+    </div>
+
+
+    <div class="line">---------------视图------------------</div>
+    <!-- 视图 -->
+    <div ng-init="list = ['Chrome', 'Safari', 'Firefox', 'IE'] ">
+        <input ng-model="list" ng-list>
+        <input ng-model="list" ng-list>
+        <pre>list={{list}}</pre>
+        <ol>
+            <li ng-repeat="item in list">
+                {{item}}
+            </li>
+        </ol>
+    </div>
+    <!-- /视图 -->
+
+    <div class="line">---------------指令------------------</div>
+    <!-- 指令 -->
+    <div contentEditable="true" ng-model="content">Edit Me</div>
+    <pre>model = {{content}}</pre>
+
+    <div ng-controller="Ctrl1">
+        Hello
+        <input ng-model='name'>
+
+        <span ng:bind="name"></span>
+
+        <span ng_bind="name"></span>
+
+        <span ng-bind="name"></span>
+
+        <span data-ng-bind="name"></span>
+
+        <span x-ng-bind="name"></span>
+        <br/>
+    </div>
+    <!-- /指令 -->
+
+    <div class="line">---------------过滤器------------------</div>
+
+    <div ng-init="list = ['Chrome', 'Safari', 'Firefox', 'IE'] ">
+        Number formatting: {{ 1234567890 | number }}
+        <br>array filtering
+        <input ng-model="predicate">{{ list | filter:predicate | json }}
+    </div>
+
+    <div class="line">---------------字符串替换------------------</div>
+    <!-- <img src="../static/img/{{1}}.jpg" width="30" height="30" />Hello {{username}}! -->
+    <div ng-app="" ng-init="firstName='John';lastName='Doe'">
+        <p>姓名表达式： {{ firstName + " " + lastName }}</p>
+        <p data-ng-bind="firstName+' '+lastName"></p>
+    </div>
+
+    <div class="line">---------------angularjs 对象+数组------------------</div>
+    <div ng-app="" ng-init="person={firstName:'John',lastName:'Doe'};person2=[1,2,3,4];">
+        <p>姓为 {{ person.lastName +' '+person.firstName+' '+person2[2]}}</p>
+        <p>第三个值为
+            <span data-ng-bind="person2[2]"></span>
+        </p>
+    </div>
+    <div ng-app="" ng-init="names=[
+{name:'Jani',country:'Norway'},
+{name:'Hege',country:'Sweden'},
+{name:'Kai',country:'Denmark'}]">
+
+        <p>循环对象：</p>
+        <ul>
+            <li ng-repeat="x in names">
+                {{ x.name + ', ' + x.country }}
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- ng-controller -->
+    <div ng-app="" ng-controller="personController">
+
+        名：
+        <input type="text" ng-model="person.firstName">
+        <br>姓：
+        <input type="text" ng-model="person.lastName">
+        <br>
+        <br>姓名： {{person.firstName + " " + person.lastName}}
+        <br>姓名2：{{person.fullName();}}
+        <br>姓名3：{{fullName2();}}
+
+    </div>
+
+    <div ng-app="" ng-controller="namesController">
+
+        <ul>
+            <li ng-repeat="x in names">
+                {{ x.name + ', ' + x.country }}
+            </li>
+        </ul>
+
+    </div>
+    <div class="line">/------------------过滤器----------------------/</div>
+    <div ng-app="" ng-controller="personController">
+        <p>姓名为 {{ person.lastName | uppercase }}</p>
+    </div>
+
+    <div class="line">/------------------angular xmlhttprequest----------------------/</div>
+    <!-- <div ng-controller="customersController">
+
+        <ul>
+            <li ng-repeat="x in names">
+                {{ x.Name + ', ' + x.Country }}
+            </li>
+        </ul>
+
+    </div> -->
+
+    <div class="line">/------------------ng-disabled的使用----------------------/</div>
+    <div ng-app="" ng-init="mySwitch=true">
+        <p>
+            <button ng-disabled="mySwitch">点我!</button>
+        </p>
+        <p>
+            <input type="checkbox" ng-model="mySwitch" />按钮
+        </p>
+        <p>
+            {{ mySwitch }}ng-model 指令绑定 "mySwitch" 到 HTML input checkbox 元素的内容（value）。
+        </p>
+    </div>
+
+    <div class="line">/------------------ng-click----------------------/</div>
+    <div ng-app="" ng-controller="myController">
+
+        <button ng-click="count = count + 1">点我!</button>
+
+        <p>{{ count }}</p>
+
+    </div>
+    <div class="line">/------------------ng-show ng-hide ----------------------/</div>
+    <div ng-show="1<12">ng-hide="false" 让 HTML 元素 不可见。</div>
+
+    <div ng-hide="1>12">ng-hide="true" 让 HTML 元素 不可见。</div>
+
+    <div ng-controller="personController1">
+
+        <button ng-click="toggle()">隐藏/显示</button>
+
+        <p ng-hide="myVar">
+            名:
+            <input type="text" ng-model="person.firstName">
+            <br>姓:
+            <input type="text" ng-model="person.lastName">
+            <br>
+            <br>姓名: {{person.firstName + " " + person.lastName}}
+        </p>
+
+    </div>
+
+    <div class="line">/------------------定义angularjs 模块----------------------/</div>
+    <!-- <div ng-app="myApp" ng-controller="myCtrl">
+        {{ (go | lowercase) + " " + (gogo | lowercase) }}
+    </div> -->
+
+    <div class="line">/------------------angularjs 表单----------------------/</div>
+    <div ng-app="" ng-controller="formController">
+        <form novalidate>
+            First Name:
+            <br>
+            <input type="text" ng-model="user.firstName">
+            <br>Last Name:
+            <br>
+            <input type="text" ng-model="user.lastName">
+            <br>
+            <br>
+            <button ng-click="reset()">RESET</button>
+        </form>
+        <p>form = {{user}}</p>
+        <p>master = {{master}}</p>
+    </div>
+
+    <div class="line">/------------------angularjs 表单验证----------------------/</div>
+    <h2>Validation Example</h2>
+
+    <form ng-controller="validateCtrl" name="myForm" novalidate>
+
+        <p>Username:
+            <br>
+            <input type="text" name="user" ng-model="user" required>
+            <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+                <span ng-show="myForm.user.$error.required">Username is required.</span>
+            </span>
+        </p>
+
+        <p>Email:
+            <br>
+            <input type="email" name="email" ng-model="email" required>
+            <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+                <span ng-show="myForm.email.$error.required">Email is required.</span>
+                <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+            </span>
+        </p>
+
+        <p>
+            <input type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid ||
+  myForm.email.$dirty && myForm.email.$invalid">
+        </p>
+
+    </form>
+    <script src="../static/js/lib/angularjs/angular.js"></script>
+    <script>
+    //myApp
+    // var app = angular.module("myApp", []);
+
+    // app.controller("myCtrl", function($scope) {
+    //     $scope.go = "go";
+    //     $scope.gogo = "gogo";
+    // });
+    //
+    function formController($scope) {
+        $scope.master = {
+            firstName: "John",
+            lastName: "Doe"
+        };
+        $scope.reset = function() {
+            $scope.user = angular.copy($scope.master);
+        };
+        $scope.reset();
+    };
+
+    function validateCtrl($scope) {
+        $scope.user = 'John Doe';
+        $scope.email = 'john.doe@gmail.com';
+    }
+
+    function personController1($scope) {
+        $scope.person = {
+            firstName: "John",
+            lastName: "Doe"
+        };
+        $scope.myVar = false;
+        $scope.toggle = function() {
+            $scope.myVar = !$scope.myVar;
+        };
+    }
+
+    function myController($scope) {
+        $scope.count = 0;
+    }
+
+    // function customersController($scope, $http) {
+    //     $http.get("http://www.w3cschool.cc/try/angularjs/data/Customers_JSON.php")
+    //         .success(function(response) {
+    //             $scope.names = response;
+    //         });
+    // }
+
+    function namesController($scope) {
+        $scope.names = [{
+            name: 'Jani',
+            country: 'Norway'
+        }, {
+            name: 'Hege',
+            country: 'Sweden'
+        }, {
+            name: 'Kai',
+            country: 'Denmark'
+        }];
+    }
+
+    function personController($scope) {
+        $scope.person = {
+            firstName: "John",
+            lastName: "Doe",
+            fullName: function() {
+                var x = $scope.person;
+                return x.firstName + " " + x.lastName;
+            }
+        };
+
+        $scope.fullName2 = function() {
+            var x;
+            x = $scope.person;
+            return x.firstName + " " + x.lastName;
+        }
+    }
+    </script>
+
+
+    <script>
+    // 1 暴露到window下了
+    function HelloAngular($scope) {
+
+        $scope.greeting = {
+            text: "hello"
+        };
+
+    }
+    // 2使用 module
+    // var myModule = angular.module("HelloAngular",[]);
+    // myModule.controller("HelloAngular",['$scope',function HelloAngular($scope){
+    //     $scope.greeting = {text:"hello"};
+    // }]);
+
+    function GreetCtrl($scope, $rootScope) {
+
+        $scope.name = "Word";
+
+        $rootScope.department = "Angular";
+
+    }
+
+    function listCtrl($scope) {
+
+        $scope.names = ["ye1", "ye2", "ye3"];
+
+    }
+
+    //计算价格 data-model
+    function InvoiceCntl($scope) {
+        $scope.qty = 1;
+        $scope.cost = 19.95;
+    }
+
+    //MyCtrl
+    function MyCtrl($scope) {
+        $scope.action = function() {
+            $scope.name = 'OK';
+        }
+
+        $scope.name = 'World';
+    }
+
+    function Ctrl1($scope) {
+        $scope.name = 'angular';
+    }
+    </script>
+</body>
+
+</html>

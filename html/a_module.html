@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>aaaa</title>
+</head>
+
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        {{ firstName + " " + lastName }}
+        {{fullName();}}
+    </div>
+    <script src="../static/js/lib/angularjs/angular.js"></script>
+    <script>
+    var app = angular.module("myApp", []);
+    app.controller("myCtrl", function($scope) {
+        $scope.firstName = "John";
+        $scope.lastName = "Doe";
+        $scope.fullName = function(){
+            return $scope.firstName + ' ' + $scope.lastName;
+        }
+    });
+    </script>
+</body>
+
+</html>
