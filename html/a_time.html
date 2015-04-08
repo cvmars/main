@@ -5,18 +5,16 @@
     <script src="../static/js/lib/angularjs/angular.js"></script>
     <script>
     angular.module('timeExampleModule', []).
-    // Declare new object call time,
-    // which will be available for injection
+        // Declare new object call time,
+        // which will be available for injection
     factory('time', function($timeout) {
         var time = {};
-
         (function tick() {
             time.now = new Date().toString();
             $timeout(tick, 1000);
         })();
         return time;
     });
-
     // Notice that you can simply ask for time
     // and it will be provided. No need to look for it.
     function ClockCtrl($scope, time) {
@@ -29,6 +27,15 @@
     <div ng-controller="ClockCtrl">
         Current time is: {{ time.now }}
     </div>
+    <div ng-if="2+2===5">
+        111111
+    </div>
+    <ul ng-controller="PeopleController">
+        <li ng-repeat="person in people" ng-class="{even: !$even, odd: !$odd}">
+            {{person.name}} lives in {{person.city}}
+        </li>
+    </ul>
+    {{ ['Ari','Lerner','Likes','To','Eat','Pizza'] | filter:'e' }} {{ {'name': 'Ari', 'City': 'SanFrancisco'} | json }}
 </body>
 
 </html>
