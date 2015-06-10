@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>oop1</title>
+</head>
+<body>
+	
+	<script>
+
+	Function.prototype.method = function(name,fn){
+
+		this.prototype[name] = fn;
+
+		return this;
+
+	}
+
+	var Person = function(name){
+
+		this.name = name;
+
+	};
+
+	Person.method('eat',function(ele){
+
+		alert(ele);
+
+		alert(this.name);
+
+	}).
+	method('run',function(ele){
+
+		alert(ele);
+
+	});
+
+	var yeling = new Person("yeling");
+
+	yeling.run("go");
+
+
+	</script>
+</body>
+</html>
