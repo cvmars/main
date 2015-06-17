@@ -5,7 +5,7 @@
 	<title>oop1</title>
 </head>
 <body>
-	
+
 	<script>
 
 	Function.prototype.method = function(name,fn){
@@ -16,12 +16,14 @@
 
 	}
 
+	//定义一个Person类
 	var Person = function(name){
 
 		this.name = name;
 
 	};
 
+	//链式定义Person类的两个方法，私有方法请使用下划线_开头
 	Person.method('eat',function(ele){
 
 		alert(ele);
@@ -33,12 +35,51 @@
 
 		alert(ele);
 
+	}).
+	method('_showItem',function(ele){
+
+		alert(ele);
+
 	});
 
-	var yeling = new Person("yeling");
+	var someone = new Person("张三");
 
-	yeling.run("go");
+	someone.run("go");
 
+
+	;(function(){
+
+		var page = {
+
+			index:1,
+
+			color:"red",
+
+			init:function(){
+
+				//执行_showItem，打印出 index的值
+				this._showItem();
+
+			},
+
+			_showItem:function(){
+
+				this.publicFun();
+
+			},
+
+			publicFun:function(){
+
+				console.info(this.index);
+
+			}
+
+		};
+
+		//返回red
+		console.log(page.color);
+
+	})();
 
 	</script>
 </body>
