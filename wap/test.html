@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+    <meta name="apple-touch-fullscreen" content="YES" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #333;
+        overflow: hidden;
+    }
+    li,
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+    /* 使得图片居中 webkit-box */
+    li {
+        position: absolute;
+        display: -webkit-box;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+    }
+    li img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    /* 隐藏画布外的内容 */
+    #canvas {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+    </style>
+</head>
+
+<body>
+    <script>
+    function go() {
+
+        var self = this;
+
+        var out = 5;
+
+        return (function() {
+
+            console.log(self);
+
+            console.log(out);
+
+        }).call(self);
+
+    }
+
+    var first_object = {
+        num: 42
+    };
+    var second_object = {
+        num: 24
+    };
+
+    function multiply(mult) {
+        console.log(this.num * mult);
+    }
+    multiply.call(first_object, 5); // returns 42 * 5
+    multiply.call(second_object, 5); // returns 24 * 5
+
+
+
+    var func = new function() {
+        this.a = "func";
+    };
+    var myfunc = function(x, y) {
+        var a = "myfunc";
+        alert(this.a);
+        alert(x + y);
+    };
+    myfunc.call(func, "var", " fun"); // "func" "var fun"
+    myfunc.apply(func, ["var", " fun"]); // "func" "var fun"
+    </script>
+</body>

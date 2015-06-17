@@ -13,6 +13,13 @@
 </head>
 
 <body>
+    <input type="text" ng-model="gogo">
+    {{gogo}}
+
+    <div ng-controller="go">
+        <input type="text">
+        {{heihei}}
+    </div>
 
     <div ng-controller="HelloAngular">
         <p>{{greeting.text}},Angular</p>
@@ -281,6 +288,9 @@
     </form>
     <script src="../static/js/lib/angularjs/angular.js"></script>
     <script>
+    function go($scope){
+        $scope.heihei = "heiheihahah";
+    }
     //myApp
     // var app = angular.module("myApp", []);
 
