@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script>
+
+
+
+    var Person = function(name){
+
+        this.name = name;
+
+    }
+
+    Person.prototype.getName = function(){
+
+        alert(this.name);
+
+    }
+
+    var render = new Person("Jhon");
+
+    render.getName();
+    
+    function Author(name,books){
+  
+        Person.call(this,name);   //父类构造函数
+
+        this.books = books;
+
+    }
+
+    Author.prototype = new Person();  //set up the prototype chain    把子类的原型，指向父类的实例，这样子类构造函数属性会被清空
+
+    Author.prototype.constructor = Author;  //需要再次手动指定子类构造函数一次
+
+    Author.prototype.getBooks = function(){
+
+        return this.books;
+
+    }
+
+    </script>
+</body>
+
+</html>

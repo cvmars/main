@@ -1,40 +1,64 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>oop1</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>oop1</title>
 </head>
+
 <body>
+<<<<<<< HEAD
 
 	<script>
+=======
+    <script>
+    Function.prototype.method = function(name, fn) {
 
-	Function.prototype.method = function(name,fn){
+        this.prototype[name] = fn;
 
-		this.prototype[name] = fn;
+        return this;
 
-		return this;
+    }
 
-	}
+    var Person = function(name) {
+>>>>>>> 5fe34259c130c6ff87f372336f41267904c99738
 
+        this.name = name;
+
+    };
+
+    Person.method('eat', function(ele) {
+
+        console.log(ele);
+
+<<<<<<< HEAD
 	//定义一个Person类
 	var Person = function(name){
+=======
+        console.log(this.name);
+>>>>>>> 5fe34259c130c6ff87f372336f41267904c99738
 
-		this.name = name;
+    }).
+    method('run', function(ele) {
 
-	};
+        console.log(ele);
 
+<<<<<<< HEAD
 	//链式定义Person类的两个方法，私有方法请使用下划线_开头
 	Person.method('eat',function(ele){
+=======
+    });
+>>>>>>> 5fe34259c130c6ff87f372336f41267904c99738
 
-		alert(ele);
+    var yeling = new Person("yeling");
 
-		alert(this.name);
+    yeling.run("go");
 
-	}).
-	method('run',function(ele){
+    window.onload = function() {
 
-		alert(ele);
+    	var go = 2;
 
+<<<<<<< HEAD
 	}).
 	method('_showItem',function(ele){
 
@@ -80,7 +104,35 @@
 		console.log(page.color);
 
 	})();
+=======
+    	//闭包传参
+    	var chengyu = (function(ele1,ele2){
+    		return ele1*ele2;
+    	})(10,2);
 
-	</script>
+    	console.log(chengyu);
+
+    }
+
+    //闭包
+    var baz;
+>>>>>>> 5fe34259c130c6ff87f372336f41267904c99738
+
+    (function(){
+
+    	var foo = 10;
+    	
+    	var bar = 4;
+
+    	baz = function(){
+    		console.log(foo*bar);
+    	}
+
+    })();
+
+    baz();
+
+    </script>
 </body>
+
 </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>[].slice.call()</title>
+</head>
+
+<body>
+    <script>
+
+    //slice有两个用法，一个是String.slice,一个是Array.slice，第一个返回的是字符串，第二个返回的是数组
+    var a = {
+        length: 2,
+        0: 'first',
+        1: 'second'
+    };
+
+    var arr1 = Array.prototype.slice.call(a); //  ["first", "second"]
+
+    var b = {
+        length: 2
+    };
+
+    var arr2 = Array.prototype.slice.call(b); // []
+
+    console.log(arr1);
+
+    console.log(arr2);
+
+    //2
+
+    var c = function(){
+         console.log(this);    // 'littledu'
+         console.log(typeof this);      //  Object
+         console.log(this instanceof String);    // true
+    }
+    c.call('littledu');
+
+    //3
+    
+
+    </script>
+</body>
+
+</html>

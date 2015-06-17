@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>oop3</title>
+</head>
+
+<body>
+    <script>
+    
+    //第一种：门户大开型对象 -- 只能提供公共成员
+    var Book = function(isbn,title,author){
+
+        if(isbn === undefined) throw new Error("Book constructor requries an isbn.");
+
+        this.isbn = isbn;
+
+        this.title = title || 'No title';
+
+        this.author = author || 'No author';
+
+    }
+
+    Book.prototype.display = function(){
+
+        //add
+        document.write(this.isbn+"_"+this.title+"_"+this.author);
+
+
+    }
+
+    var js = new Book('0-223','js 设计','alice');
+
+    js.display();
+
+
+    //----------------第二种写法------------------//
+
+    // var Publication = new Interface('Publication',['getIsbn','setIsbn','getTitle','setTitle','getAuthor','setAuthor','display']);
+
+    var Book2 = function(isbn,title,author){
+
+        this.setIsbn(isbn);
+
+        this.setTitle(title);
+
+        this.setAuthor(author);
+
+    }
+
+    //所有方法都写在原型对象中，在内存中只有一份，无论对象被创建了多少个
+    Book2.prototype = {
+
+        checkIsbn:function(){
+
+            //...
+
+        },
+
+        getIsbn:function(){
+
+            //return this._isbn;
+            return this.isbn;
+
+        },
+
+        setIsbn:function(){
+
+            if(!this.checkIsbn(isbn)) throw new Error("error");
+
+            //this._isbn = isbn;
+            this.isbn = isbn;
+            
+        },
+
+        getTitle:function(){
+
+            return this.title;
+            
+            
+        },
+
+        setTitle:function(){
+
+            this.title = title || 'no title';
+            
+        },
+
+        display:function(){
+
+
+
+        }
+
+    };
+
+
+    //第二种：用下划线表示私有方法或者属性
+
+    //和上面第一种构建类似，只是属性用  _  表示私有而已   
+
+    //第三种：用闭包来创建真正的私有成员
+
+    var Book3 = function(newIsbn,newTitle,newAuthor){
+
+        var isbn,title,author;
+
+        //private method 私有方法，可以直接访问私有成员，占内存，每次创建对象都会生成一个新的副本
+        function checkIsbn(){};
+
+        //Privileged methods   特权方法，每次都会生成一个新的副本，比较耗内存
+        this.getIsbn = function(){
+
+            return isbn;
+
+        }
+
+        this.setIsbn = function(){
+
+
+            // if(!this.checkIsbn(newIsbn)) throw new Error("error");
+
+            isbn = newIsbn;
+
+        }
+
+        this.getTitle = function(){
+
+            return title;
+
+        }
+
+        this.setTitle = function(){
+
+            title = newTitle;
+
+        }
+
+        this.getAuthor = function(){
+
+            return author;
+
+        }
+
+        this.setAuthor = function(){
+
+            author = newAuthor || 'no author';
+
+        }
+
+
+        //constructor code
+        this.setIsbn(newIsbn);
+
+        this.setTitle(newTitle);
+
+        this.setAuthor(newAuthor);
+
+
+
+    }
+
+    Book3.prototype = {
+
+        display:function(){
+
+            //。。。
+            console.log(this.getAuthor());
+
+        }
+
+    };
+
+    var css = new Book3('0-4-5-6','title');
+
+    css.display();
+
+    console.log(css.getAuthor());
+
+    
+
+
+
+    function foo(){
+
+        var a = 10;
+
+        function bar(){
+
+            a *= 2;
+
+        }
+
+        bar();
+
+        return a;
+
+    }
+
+    document.write("<br />"+foo()+"--foo"); //20
+
+    </script>
+</body>
+
+</html>
