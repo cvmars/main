@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>oop2</title>
+</head>
+
+<body>
+    <script>
+    Function.prototype.method = function(name, fn) {
+
+        this.prototype[name] = fn;
+
+        return this;
+
+    }
+
+    var Person = function(name,age) {
+
+        this.name = name;
+
+        this.age = age;
+
+    };
+
+    Person.method('getName', function() {
+
+        return this.name;
+
+    }).
+    method('getAge', function() {
+
+        return this.age;
+
+    });
+
+    var yeling = new Person("yeling",28);
+
+    var alice = new Person("alice",1000);
+
+    //modify the class
+    Person.prototype.getGreeting = function(){
+
+        console.log( 'hi '+this.getName()+' !');
+
+    }
+
+    yeling.getGreeting();
+
+    //modify a specific instance
+    alice.displayGreeting = function(){
+
+        this.getGreeting();
+
+    };
+
+    alice.displayGreeting();
+
+    </script>
+</body>
+
+</html>

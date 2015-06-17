@@ -1,45 +1,75 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>oop1</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>oop1</title>
 </head>
+
 <body>
-	
-	<script>
+    <script>
+    Function.prototype.method = function(name, fn) {
 
-	Function.prototype.method = function(name,fn){
+        this.prototype[name] = fn;
 
-		this.prototype[name] = fn;
+        return this;
 
-		return this;
+    }
 
-	}
+    var Person = function(name) {
 
-	var Person = function(name){
+        this.name = name;
 
-		this.name = name;
+    };
 
-	};
+    Person.method('eat', function(ele) {
 
-	Person.method('eat',function(ele){
+        console.log(ele);
 
-		alert(ele);
+        console.log(this.name);
 
-		alert(this.name);
+    }).
+    method('run', function(ele) {
 
-	}).
-	method('run',function(ele){
+        console.log(ele);
 
-		alert(ele);
+    });
 
-	});
+    var yeling = new Person("yeling");
 
-	var yeling = new Person("yeling");
+    yeling.run("go");
 
-	yeling.run("go");
+    window.onload = function() {
 
+    	var go = 2;
 
-	</script>
+    	//闭包传参
+    	var chengyu = (function(ele1,ele2){
+    		return ele1*ele2;
+    	})(10,2);
+
+    	console.log(chengyu);
+
+    }
+
+    //闭包
+    var baz;
+
+    (function(){
+
+    	var foo = 10;
+    	
+    	var bar = 4;
+
+    	baz = function(){
+    		console.log(foo*bar);
+    	}
+
+    })();
+
+    baz();
+
+    </script>
 </body>
+
 </html>
