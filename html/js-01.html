@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>js基础1</title>
+
+    <style>
+
+    #div1{
+        background: red;
+        width: 100px;
+        height: 100px;
+    }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="div1" id="div1" ></div>
+
+    <script>
+
+
+    /* javascript 的组成
+    
+    1. ecmascript 解释器，翻译  基本功能  +-*
+    2. Dom  document object model  操作页面元素的能力
+    3. Bom  bowser object model 操作浏览器的能力 没有兼容性问题，几乎不兼容 哈哈哈
+    4. 什么是对象-- 不能再分拆成其他东西了   石头分了还是石头，水分了还水
+        基本类型： 12  “abc”  true/fase undefined 不可再分，除了这三个其他所有的东西都是对象
+        复合类型：所有复合类型都是对象，所有对象都是复合类型. 对象由基本类型组成的，不是单一一种
+        数组也是对象，typeof arr   --  object
+
+    5.显示类型转换、隐式类型转换
+    parseInt  parseFloat 
+    12 == "12"  //true 隐式转换
+
+    6. 变量的命名-- 类型前缀+驼峰
+    7.假的：null 0 false undefined 空字符串 
+    8. 如何取非行间的样式
+
+
+    */
+
+    window.onload = init;
+
+    var go = function(){
+
+        return arguments[0]+arguments[1];
+
+    };
+
+
+
+    function init(){
+
+
+        var oDiv1 = document.getElementById('div1');
+
+        // console.log(oDiv1.currentStyle.width);   //ie
+
+        // console.log(getComputedStyle(oDiv1,"width").width);
+
+        //function
+        // console.log(typeof go);  
+
+        // console.log(isNaN("aaa"));
+
+        if(null == undefined){
+
+            // alert(1);
+
+        }
+
+        // console.info(2);
+
+    }
+
+    </script>
+</body>
+
+</html>
