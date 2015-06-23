@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>数组01</title>
+
+    <style>
+
+    #div1{
+        background: red;
+        width: 500px;
+        /*height: 100px;*/
+    }
+
+    </style>
+
+</head>
+
+<body>
+
+    <input type="button" value="追加" id="btn1" />
+
+    <input type="button" value="微博" id="btn2" />
+
+    <input type="button" value="删除" id="btn3" />
+
+    <input type="text" id="text" />
+
+    <div class="div1" id="div1" ></div>
+
+    <script>
+
+    //push  unshift  pop shift
+    
+    var obj = {
+
+        init:function(){
+
+            var arr = [1,2,3,4,5];
+
+            var arr1 = [6,7,8];
+
+            arr.pop();  //last ele 弹出去
+
+            console.log(arr.concat(arr1));  //合并两个数组
+
+            this.create();
+            
+
+        },
+
+        //appendChild insertBefore
+        create:function(){
+
+            
+
+            var oDiv = document.getElementById('div1');
+
+            var oBtn1 = document.getElementById('btn1');
+
+            var oBtn2 = document.getElementById('btn2');
+
+            var oBtn3 = document.getElementById('btn3');
+
+            var oTest = document.getElementById('text');
+
+
+            oBtn1.onclick = function(){
+
+                var oB = document.createElement("b");
+
+                oB.innerHTML = oTest.value;
+
+                oB.style.display = "block";
+
+                oB.style.fontSize = 20+"px";
+
+                //父.appendChild(子);
+                oDiv.appendChild(oB);
+
+            }
+
+            oBtn2.onclick = function(){
+
+                var oB = document.createElement("b");
+
+                oB.innerHTML = oTest.value;
+
+                oB.style.display = "block";
+
+                oB.style.fontSize = 30+"px";
+
+                //父.insertBefore(子，谁的前面);
+                if(oB.length == 0){
+
+                    oDiv.appendChild(oB);
+
+                }else{
+
+                    oDiv.insertBefore(oB,oB[0]);
+
+                }
+                
+                
+            }
+
+            oBtn3.onclick = function(){
+
+
+                if(oDiv.getElementsByTagName('b').length != 0){
+
+
+                    //父.removeChild(子元素);    parentNode   子元素.parentNode
+                    oDiv.removeChild(oDiv.getElementsByTagName('b')[0]);
+
+                }else{
+
+                    alert("没东西可删啦");
+
+                }
+
+            }
+
+            
+
+
+        },
+
+        //document 文档碎片  document.createElementFragment()
+
+        fragment:function(){
+
+
+
+        }
+
+    }; 
+
+    window.onload = function(){
+
+        obj.init();
+
+    }
+
+
+    </script>
+</body>
+
+</html>
