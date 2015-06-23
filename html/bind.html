@@ -59,7 +59,7 @@
 
         init: function() {
 
-            this.useBind();
+            // this.useBind();
         },
 
         useBind:function(){
@@ -107,6 +107,49 @@
     window.onload = function() {
 
         obj.init();
+
+        //
+        var cost = (function(){
+
+            var args = [];
+
+            return function(){
+
+                console.log(arguments);
+
+                if(arguments.length === 0){
+
+                    console.log("arg is 0");
+
+                    var money = 0;
+
+                    for(var i = 0,l = args.length; i<l; i++){
+
+                        money += args[ i ];
+
+                    }
+
+                    return money;
+
+                }else{
+
+                    //arguments  arguments 数组中参数会被push到 args 中
+                    [].push.apply(args,arguments);
+
+                }
+
+            }
+
+        })();
+
+
+        cost(100);
+
+        cost(200);
+
+        cost(300);
+
+        console.log(cost());  //当不传参数的时候，会计算总额
 
     };
     </script>
