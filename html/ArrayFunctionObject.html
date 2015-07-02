@@ -1,0 +1,636 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Array.prototype.join.call</title>
+</head>
+
+<body>
+    <ul>
+        <li class="go"></li>
+        <li class="go"></li>
+    </ul>
+    <div id="test">
+        <div>Item1</div>
+        <div>Item2</div>
+        <div>Item3</div>
+        <div>Item4</div>
+    </div>
+
+    <div id="scroll">13131231</div>
+
+    <script>
+    var oArray = {
+
+        init: function() {
+
+            // this.joinDemo();
+
+            // this.pushDemo();
+
+            // this.sliceDemo();
+
+            // this.reduceDemo();
+
+            // this.forEachDemo();
+
+
+        },
+
+        joinDemo: function() {
+
+            var arr = [1, 2, 3, 4, 5];
+
+            var a = Array.prototype.join.call(arr, "");
+
+            var b = arr.join("");
+
+            var c = Array.prototype.join.call(arr, [""]);
+
+            console.log(a);
+
+            console.log(b);
+
+            console.log(c);
+
+            console.log(Object.prototype.toString(c)); //a,b,c 都为[object Object]
+
+            console.log(typeof a); //a,b,c =>string
+
+        },
+
+        pushDemo: function() {
+
+            var arr = [1, 2, 3, 4, 5];
+
+            Array.prototype.push.call(arr, 6, 7, 8, 9);
+
+            Array.prototype.push.apply(arr, [11, 12]);
+
+            console.log(arr); //[1~12]
+
+        },
+
+        sliceDemo: function() {
+
+            var arr = [1, 2, 3, 4];
+
+            var go = Array.prototype.slice.call(arr, 2);
+
+            console.log(go + ":" + arr); //[3,4]  arr=>[1,2,3,4]
+
+        },
+
+        reduceDemo: function() {
+
+            //reduce补丁
+            if (!Array.prototype.reduce) {
+                Array.prototype.reduce = function(callback /*, initialValue*/ ) {
+                    'use strict';
+                    if (this == null) {
+                        throw new TypeError('Array.prototype.reduce called on null or undefined');
+                    }
+                    if (typeof callback !== 'function') {
+                        throw new TypeError(callback + ' is not a function');
+                    }
+                    var t = Object(this),
+                        len = t.length >>> 0,
+                        k = 0,
+                        value;
+                    if (arguments.length == 2) {
+                        value = arguments[1];
+                    } else {
+                        while (k < len && !(k in t)) {
+                            k++;
+                        }
+                        if (k >= len) {
+                            throw new TypeError('Reduce of empty array with no initial value');
+                        }
+                        value = t[k++];
+                    }
+                    for (; k < len; k++) {
+                        if (k in t) {
+                            value = callback(value, t[k], k, t);
+                        }
+                    }
+                    return value;
+                };
+            }
+
+            //arr.reduce(callback[, initialValue])
+
+            var total01 = [0, 1, 2, 3].reduce(function(a, b) {
+
+                return a + b;
+
+            }, 10);
+
+
+            var total02 = Array.prototype.reduce.call([1, 2, 3, 4], function(a, b) {
+
+                return a + b;
+
+            }, 10);
+
+            console.log(total01); //6
+
+            console.log(total02); //10
+
+            var total03 = [0, 1, 2, 3, 4].reduce(function(previousValue, currentValue, index, array) {
+                return previousValue + currentValue;
+            }, 10);
+
+            console.log(total03); //20
+
+        },
+
+        forEachDemo: function() {
+
+            if (!Array.prototype.forEach) {
+
+                Array.prototype.forEach = function(callback, thisArg) {
+
+                    var T, k;
+
+                    if (this == null) {
+                        throw new TypeError(' this is null or not defined');
+                    }
+
+                    // 1. Let O be the result of calling ToObject passing the |this| value as the argument.
+                    var O = Object(this);
+
+                    // 2. Let lenValue be the result of calling the Get internal method of O with the argument "length".
+                    // 3. Let len be ToUint32(lenValue).
+                    var len = O.length >>> 0;
+
+                    // 4. If IsCallable(callback) is false, throw a TypeError exception.
+                    // See: http://es5.github.com/#x9.11
+                    if (typeof callback !== "function") {
+                        throw new TypeError(callback + ' is not a function');
+                    }
+
+                    // 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
+                    if (arguments.length > 1) {
+                        T = thisArg;
+                    }
+
+                    // 6. Let k be 0
+                    k = 0;
+
+                    // 7. Repeat, while k < len
+                    while (k < len) {
+
+                        var kValue;
+
+                        // a. Let Pk be ToString(k).
+                        //   This is implicit for LHS operands of the in operator
+                        // b. Let kPresent be the result of calling the HasProperty internal method of O with argument Pk.
+                        //   This step can be combined with c
+                        // c. If kPresent is true, then
+                        if (k in O) {
+
+                            // i. Let kValue be the result of calling the Get internal method of O with argument Pk.
+                            kValue = O[k];
+
+                            // ii. Call the Call internal method of callback with T as the this value and
+                            // argument list containing kValue, k, and O.
+                            callback.call(T, kValue, k, O);
+                        }
+                        // d. Increase k by 1.
+                        k++;
+                    }
+                    // 8. return undefined
+                };
+            }
+
+            [].forEach.call([1, 2], function(item, i) {
+
+                console.log(i + ":" + item); // 0:1  1:2
+
+            });
+
+
+            Array.prototype.forEach.call([3, 4], function(item, i) {
+
+                console.log(i + ":" + item); // 0:1  1:2
+
+            });
+
+        }
+
+    };
+
+    var oFunction = {
+
+        init: function() {
+
+            // this.callDemo();
+
+            // this.toStringDemo();
+
+            this.bindDemo();
+
+        },
+
+        callDemo: function() {
+
+            //call基本应用1
+            var obj = {
+                add: 1
+            };
+
+            var go = function(add) {
+                console.log(this.add);
+            };
+
+            go.call(obj);
+
+            //call基本应用2
+            function test(str) {
+                alert(this.name + " " + str);
+            }
+            var object = new Object();
+
+            object.name = "zhangsan";
+
+            test.call(object, "langsin");
+
+        },
+
+        toStringDemo: function() {
+
+            function go() {
+
+                console.log(this);
+
+            }
+
+            var fun = function() {
+
+                console.log(this);
+
+            }();
+
+            go();
+
+            var go = Function.prototype.toString.call(go);
+
+            console.log(go);
+
+        },
+
+        bindDemo: function() {
+
+            //兼容
+            if (!Function.prototype.bind) {
+                Function.prototype.bind = function(obj) {
+                    var _self = this
+                        ,args = arguments;
+                    return function() {
+                        _self.apply(obj, Array.prototype.slice.call(args, 1));
+                    }
+                }
+            }
+
+            var obj = {
+                title: 1
+            };
+
+            var go = function() {
+
+                console.log(this.title);
+
+            };
+
+            go.bind(obj)(); //1
+
+            //bind与call很相似,，例如，可接受的参数都分为两部分，且第一个参数都是作为执行时函数上下文中的this的对象。不同点有两个：①bind的返回值是函数
+
+            function T(c) {
+                this.id = "Object";
+                this.dom = document.getElementById("scroll");
+            }
+            T.prototype = {
+
+                init: function() {　
+                    this.dom.onmouseover = function() {
+                        console.log("Over-->" + this.id);
+                    };
+
+                    //②
+                    this.dom.onmouseout = function() {
+                        console.log("Out -->" + this.id);
+                    }.bind(this);
+
+                }
+            };
+
+            (new T()).init();
+
+
+            //区别
+            function f(a,b,c){
+                console.log(a,b,c);
+            }
+
+            var f_Extend = f.bind(null,"extend_A")
+
+            f("A","B","C")  //这里会输出--> A B C
+
+            f_Extend("A","B","C")  //这里会输出--> extend_A A B
+
+            f_Extend("B","C")  //这里会输出--> extend_A B C
+
+            f.call(null,"extend_A") //这里会输出--> extend_A undefined undefined
+
+            //这个区别不是很好理解call 是 把第二个及以后的参数作为f方法的实参传进去而bind 虽说也是获取第二个及以后的参数用于之后方法的执行，但是f_Extend中传入的实参则是在bind中传入参数的基础上往后排的。
+            //
+            //
+            function testBind(a,b,c){
+
+                console.log(a+":"+b+":"+c);
+
+            }
+
+            var testBind2 = testBind.bind(null,1);
+
+            testBind2(2,3,4);  //1:2:3
+
+            testBind2(3,4);  //1:3:4
+
+            //和call apply 的区别，bind返回的是一个函数   null表示不改变当前this指向
+
+            testBind.call(null,2,3,4);   //2:3:4
+
+
+            testBind.apply(null,[2,3,4]);   //2:3:4
+
+
+
+        }
+
+    };
+
+    var oSuper = {
+
+        init: function() {
+
+            // this.superDemo();
+
+            // this.superDemoProblem();
+
+            this.allSuperDemo();
+
+        },
+
+        superDemo: function() {
+
+            function SuperType() {
+                this.property = true;
+            }
+
+            SuperType.prototype.getSuperValue = function() {
+                return this.property;
+            };
+
+            function SubType() {
+                this.subproperty = false;
+            }
+
+            //继承了SuperType
+            SubType.prototype = new SuperType();
+            SubType.prototype.getSubValue = function() {
+                return this.subproperty;
+            };
+
+            var instance = new SubType();
+
+            console.log(instance.getSubValue()); //false
+
+            console.log(instance.getSuperValue()); //true
+
+            console.log(instance instanceof Object); //true
+            console.log(instance instanceof SuperType); //true
+            console.log(instance instanceof SubType); //true
+
+            console.log(Object.prototype.isPrototypeOf(instance)); //true
+            console.log(SuperType.prototype.isPrototypeOf(instance)); //true
+            console.log(SubType.prototype.isPrototypeOf(instance)); //true
+
+
+        },
+
+        superDemoProblem: function() {
+
+            //虽然很强大，可以用它来实现继承，但它也存在一些问题。最主要的问题来自包含引用类型值的原型。在通过原型来实现继承时，原型实际上会变成一个类型的实例。于是，原先的实例属性也顺理成章的变成了现在的原型的属性了
+
+            function SuperType() {
+                this.colors = ["red", "green", "blue"];
+            }
+
+            function SubType() {}
+
+            //继承了SuperType
+            SubType.prototype = new SuperType();
+            var instance1 = new SubType();
+            instance1.colors.push("black");
+            alert(instance1.colors); //red,green,blue,black
+
+            var instance2 = new SubType();
+            alert(instance2.colors); //red,green,blue,black
+
+        },
+
+        allSuperDemo: function() {
+
+            function Parent(hello) {
+                this.hello = hello;
+            }
+
+            Parent.prototype.sayHello = function() {
+                alert(this.hello);
+            }
+
+            function Child(hello, world) {
+                Parent.call(this, hello); //将父类的属性继承过来
+                this.world = world; //新增一些属性
+            }
+
+            Child.prototype = new Parent(); //将父类的方法继承过来
+
+            Child.prototype.sayWorld = function() { //新增一些方法
+                alert(this.world);
+            }
+
+            var c = new Child("zhangsan", "lisi");
+
+            c.sayHello();
+
+            c.sayWorld();
+
+        },
+
+        forClickDemo: function() {
+
+            function test02() {
+                var els = document.getElementById('test').getElementsByTagName('div');
+                for (var i = 0, len = els.length; i < len; i++) {
+
+                    console.log(i);
+
+                    els[i].onclick = function() {
+                        console.log(this.innerHTML);
+                        return false;
+                    }
+                }
+            }
+
+            function test() {
+                var els = document.getElementById('test').getElementsByTagName('div');
+                for (var i = 0, len = els.length; i < len; i++) {
+                    // console.log(this);
+                    // console.log(els);
+                    this.index = i;
+                    els[this.index].onclick = function() {
+                        console.log(this.innerHTML);
+                        return false;
+                    }
+                }
+            }
+
+            function test1() {
+                var els = document.getElementById('test').getElementsByTagName('div');
+                for (var i = 0, len = els.length; i < len; i++) {
+
+                    ;
+                    (function(i) {
+
+                        els[i].onclick = function() {
+                            console.log(this.innerHTML);
+                            return false;
+                        }
+
+                    })(i);
+
+                }
+            }
+
+        }
+
+    };
+
+    var oObject = {
+
+        init: function() {
+
+            this.creatDemo();
+
+            this.toStringDemo();
+
+        },
+
+        creatDemo: function() {
+            //creat 补丁
+            if (typeof Object.create != 'function') {
+                // Production steps of ECMA-262, Edition 5, 15.2.3.5
+                // Reference: http://es5.github.io/#x15.2.3.5
+                Object.create = (function() {
+                    // To save on memory, use a shared constructor
+                    function Temp() {}
+
+                    // make a safe reference to Object.prototype.hasOwnProperty
+                    var hasOwn = Object.prototype.hasOwnProperty;
+
+                    return function(O) {
+                        // 1. If Type(O) is not Object or Null throw a TypeError exception.
+                        if (typeof O != 'object') {
+                            throw TypeError('Object prototype may only be an Object or null');
+                        }
+
+                        // 2. Let obj be the result of creating a new object as if by the
+                        //    expression new Object() where Object is the standard built-in
+                        //    constructor with that name
+                        // 3. Set the [[Prototype]] internal property of obj to O.
+                        Temp.prototype = O;
+                        var obj = new Temp();
+                        Temp.prototype = null; // Let's not keep a stray reference to O...
+
+                        // 4. If the argument Properties is present and not undefined, add
+                        //    own properties to obj as if by calling the standard built-in
+                        //    function Object.defineProperties with arguments obj and
+                        //    Properties.
+                        if (arguments.length > 1) {
+                            // Object.defineProperties does ToObject on its first argument.
+                            var Properties = Object(arguments[1]);
+                            for (var prop in Properties) {
+                                if (hasOwn.call(Properties, prop)) {
+                                    obj[prop] = Properties[prop];
+                                }
+                            }
+                        }
+
+                        // 5. Return obj
+                        return obj;
+                    };
+                })();
+            }
+
+            function Car(desc) {
+                this.desc = desc;
+                this.color = "red";
+            }
+
+            Car.prototype = {
+                getInfo: function() {
+                    return 'A ' + this.color + ' ' + this.desc + '.';
+                }
+            };
+
+            //instantiate object using the constructor function
+            var car = Object.create(Car.prototype);
+
+            car.color = "blue";
+
+            console.log(car.getInfo());
+
+        },
+
+        toStringDemo: function() {
+
+
+            var str1 = Object.prototype.toString.call([1, 2]);
+
+            var str2 = Object.prototype.toString.call({
+                a: 1
+            });
+
+            var str3 = Object.prototype.toString.call("aaa");
+
+            console.log(str1);
+
+            console.log(str2 + ":" + ({
+                a: 1
+            }).toString());
+
+            console.log(str3);
+
+        }
+
+    };
+
+    window.onload = function() {
+
+        // oArray.init();
+
+        oFunction.init();
+
+        // oSuper.init();
+
+        // oObject.init();
+
+    };
+    </script>
+</body>
+
+</html>
