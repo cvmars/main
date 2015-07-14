@@ -210,6 +210,11 @@
 
             });
 
+            [].forEach.call({length:3,0:"5",1:"6"}, function(item, i) {
+
+                console.log(i + ":" + item); // 0:1  1:2
+
+            });
 
             Array.prototype.forEach.call([3, 4], function(item, i) {
 
@@ -229,7 +234,7 @@
 
             // this.toStringDemo();
 
-            this.bindDemo();
+            // this.bindDemo();
 
         },
 
@@ -334,15 +339,15 @@
                 console.log(a,b,c);
             }
 
-            var f_Extend = f.bind(null,"extend_A")
+            var f_Extend = f.bind(null,"extend_A");
 
-            f("A","B","C")  //这里会输出--> A B C
+            f("A","B","C");  //这里会输出--> A B C
 
-            f_Extend("A","B","C")  //这里会输出--> extend_A A B
+            f_Extend("A","B","C");  //这里会输出--> extend_A A B
 
-            f_Extend("B","C")  //这里会输出--> extend_A B C
+            f_Extend("B","C");  //这里会输出--> extend_A B C
 
-            f.call(null,"extend_A") //这里会输出--> extend_A undefined undefined
+            f.call(null,"extend_A"); //这里会输出--> extend_A undefined undefined
 
             //这个区别不是很好理解call 是 把第二个及以后的参数作为f方法的实参传进去而bind 虽说也是获取第二个及以后的参数用于之后方法的执行，但是f_Extend中传入的实参则是在bind中传入参数的基础上往后排的。
             //
@@ -623,11 +628,21 @@
 
         // oArray.init();
 
-        oFunction.init();
+        // oFunction.init();
 
         // oSuper.init();
 
         // oObject.init();
+        //
+        var go = function(){
+
+            console.log(1);
+
+        }
+
+
+        var go2 = go.bind(null);
+
 
     };
     </script>
