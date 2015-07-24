@@ -7,10 +7,7 @@
 </head>
 
 <body>
-<<<<<<< HEAD
 
-	<script>
-=======
     <script>
     Function.prototype.method = function(name, fn) {
 
@@ -21,7 +18,6 @@
     }
 
     var Person = function(name) {
->>>>>>> 5fe34259c130c6ff87f372336f41267904c99738
 
         this.name = name;
 
@@ -31,24 +27,20 @@
 
         console.log(ele);
 
-<<<<<<< HEAD
-	//定义一个Person类
-	var Person = function(name){
-=======
-        console.log(this.name);
->>>>>>> 5fe34259c130c6ff87f372336f41267904c99738
 
     }).
     method('run', function(ele) {
 
         console.log(ele);
 
-<<<<<<< HEAD
-	//链式定义Person类的两个方法，私有方法请使用下划线_开头
-	Person.method('eat',function(ele){
-=======
+    }).
+    method('_showItem',function(ele){
+
+        alert(ele);
+
     });
->>>>>>> 5fe34259c130c6ff87f372336f41267904c99738
+
+	//链式定义Person类的两个方法，私有方法请使用下划线_开头
 
     var yeling = new Person("yeling");
 
@@ -58,13 +50,7 @@
 
     	var go = 2;
 
-<<<<<<< HEAD
-	}).
-	method('_showItem',function(ele){
-
-		alert(ele);
-
-	});
+	};
 
 	var someone = new Person("张三");
 
@@ -104,7 +90,6 @@
 		console.log(page.color);
 
 	})();
-=======
     	//闭包传参
     	var chengyu = (function(ele1,ele2){
     		return ele1*ele2;
@@ -116,12 +101,11 @@
 
     //闭包
     var baz;
->>>>>>> 5fe34259c130c6ff87f372336f41267904c99738
 
     (function(){
 
     	var foo = 10;
-    	
+
     	var bar = 4;
 
     	baz = function(){
