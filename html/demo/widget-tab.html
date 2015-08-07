@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>bind方法</title>
+</head>
+
+<body>
+
+
+    <script>
+    //bind方法兼容
+    if (!Function.prototype.bind) {
+        // Function.prototype.bind = function(oThis) {
+        //     if (typeof this !== "function") {
+        //         // closest thing possible to the ECMAScript 5
+        //         // internal IsCallable function
+        //         throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+        //     }
+
+        //     var aArgs = Array.prototype.slice.call(arguments, 1),
+        //         fToBind = this,
+        //         fNOP = function() {},
+        //         fBound = function() {
+        //             return fToBind.apply(this instanceof fNOP ? this : oThis,
+        //                 aArgs.concat(Array.prototype.slice.call(arguments)));
+        //         };
+
+        //     fNOP.prototype = this.prototype;
+        //     fBound.prototype = new fNOP();
+
+        //     return fBound;
+        // };
+
+        //第二种方法
+         Function.prototype.bind = function() {
+
+            //save  原函数
+            var self = this,
+                context = [].shift.call(arguments),   //需要绑定的this上下文
+                args = [].slice.call(arguments);      //剩余的参数转成数组
+
+            return function(){
+
+                return self.apply(context,[].concat.call(args,[].slice.call(arguments)));
+
+                //执行新的函数的时候，会把之前传入的context当作新函数体内的this
+                //并且组合两次分别传入的参数，作为新函数的参数
+
+            }
+
+         }
+
+    };
+
+    //单体模式
+    var obj = {
+
+        init: function() {
+
+            // this.useBind();
+        },
+
+        useBind:function(){
+
+            var a = {
+                name: "bind输出"
+            };
+
+            var b = {
+                name:"call && apply 输出"
+            };
+
+            //IE低版本不支持 bind ，ecmascript5 的特性
+            //第一个是制定this的指向，如果不想改变则设置为null  XXX.bind(null,arg)
+            //Object.prototype.toString.call();  检查当前参数类型
+            var go = function() {
+
+                // this.name = "default";
+                console.log(this);
+                console.log(this.name);
+                console.log(arguments[3]);
+                // console.log(Object.prototype.toString.call("aaa"));   //[object String]
+            }
+
+            //bind 用法
+             //yeling   2  [object String]
+            go.bind(a, 1, 2)(3,4);   //共四个参数 1,2,3,4 ，可以在bind中预设参数
+
+            //call改变this上下文用法
+            //yeling2   6  [object String]
+            go.call(b,5,6,7);
+
+            //apply同上call
+            //yeling2   10   [object String]
+            go.apply(b,[9,10,11]);
+
+            //如果不打算改变this上下文，则传入null 即可
+            //空  13  [object String]
+            go.call(null,12,13,14);
+
+        }
+
+    };
+
+    window.onload = function() {
+
+        obj.init();
+
+        //
+        var cost = (function(){
+
+            var args = [];
+
+            return function(){
+
+                console.log(arguments);
+
+                if(arguments.length === 0){
+
+                    console.log("arg is 0");
+
+                    var money = 0;
+
+                    for(var i = 0,l = args.length; i<l; i++){
+
+                        money += args[ i ];
+
+                    }
+
+                    return money;
+
+                }else{
+
+                    //arguments  arguments 数组中参数会被push到 args 中
+                    [].push.apply(args,arguments);
+
+                }
+
+            }
+
+        })();
+
+
+        cost(100);
+
+        cost(200);
+
+        cost(300);
+
+        console.log(cost());  //当不传参数的时候，会计算总额
+
+    };
+    </script>
+
+</body>
+
+</html>
