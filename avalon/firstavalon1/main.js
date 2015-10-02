@@ -29,9 +29,9 @@ require(['avalon', "domReady!"], function() {//第二块，添加根VM（处理�
         page: "empty"
     })
     avalon.scan(document.body)
-    
+
     require(['./modules/aaa/aaa'], function() {//第三块，加载其他模块
-        avalon.log("加载其他完毕")
+        avalon.log("加载其他完毕22")
     });
-    
+
 });

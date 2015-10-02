@@ -70,27 +70,24 @@
 </head>
 
 <body>
-    <div class="slider">
+    <div class="slider" id="slide1">
         <ul class="slider-main fixed">
-            <li>
-                <img src="img/400x400.png" />
-            </li>
-            <li>
-                <img src="img/400x400.png" />
-            </li>
-            <li>
-                <img src="img/400x400.png" />
-            </li>
             <li>
                 <img src="img/400x400.png" />
             </li>
             <li>
                 <img src="img/400x400_gray.png" />
             </li>
+            <li>
+                <img src="img/f60.png" />
+            </li>
+            <li>
+                <img src="img/1.png" />
+            </li>
         </ul>
     </div>
 
-    <div class="slider">
+    <div class="slider" id="slide2" style="margin-top:50px;">
         <ul class="slider-main fixed">
             <li>
                 <img src="img/400x400.png" />
@@ -169,6 +166,8 @@
 
                     is_move: (o.type === "move"),
 
+                    throttle_t:300,
+
                     init: function() {
 
                         //添加 1，2，3，4控制Dom
@@ -192,12 +191,38 @@
                                 });
 
                             //todo
+                            $this.on('mouseenter', '.' + ele.num_li, throttle(function() {
+
+                                _index = $(this).index();
+
+                                _ul.children("li").eq(_index).css("zIndex", 1).siblings().css("zIndex", 0);
+
+                                _ul.children("li").eq(_index).stop(true).animate({
+
+                                    "opacity": 1
+
+                                }, {
+                                    duration: o.duration,
+
+                                    complete: function() {
+
+                                        _ul.children("li").eq(_index).siblings().css({
+                                            "opacity": 0
+                                        });
+
+                                    }
+
+                                });
+
+                                $(this).addClass(active).siblings().removeClass(active);
+
+                            },obj.throttle_t));
 
 
                         } else if (obj.is_move) {
 
                             //bind event on <li>
-                            $this.on('mouseenter', '.' + ele.num_li, function() {
+                            $this.on('mouseenter', '.' + ele.num_li, throttle(function() {
 
                                 _index = $(this).index();
 
@@ -209,7 +234,7 @@
 
                                 $(this).addClass(active).siblings().removeClass(active);
 
-                            });
+                            },obj.throttle_t));
 
 
                         }
@@ -413,14 +438,14 @@
 
                         showEffect("prev");
 
-                    }, 300));
+                    }, obj.throttle_t));
 
                     //上一页
                     $this.on("click", "." + ele.next_btn, throttle(function() {
 
                         showEffect();
 
-                    }, 300));
+                    }, obj.throttle_t));
 
                 }
 
@@ -447,17 +472,17 @@
         //this defaults
         $.fn.fn_slide.defaults = {
 
-            time: 3000,
+            time: 3000,  //滚动延迟
 
-            duration: 300,
+            duration: 1000,  //滚动延迟
 
-            direction: 'left',
+            direction: 'left',  //暂时不支持
 
-            has_num: false,
+            has_num: true, //true->有数字  false->无数字
 
-            type: "fadeIn", //fadeIn move
+            type: "fadeIn", //fadeIn - move
 
-            flip: true
+            flip: false  //是否需要翻页
 
         };
 
@@ -465,7 +490,17 @@
 
     $(function() {
 
-        $('.slider').fn_slide();
+        $('#slide1').fn_slide({
+
+            type: "move"
+
+        });
+
+        $('#slide2').fn_slide({
+
+            type: "fadeIn"
+
+        });
 
     });
     </script>

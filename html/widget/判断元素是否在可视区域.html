@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>bind方法</title>
+    <style>
+    .item {
+        width: 500px;
+        height: 500px;
+        border: 1px solid #ddd;
+        background: #f60;
+        font-size: 50px;
+        color: #fff;
+        font-weight: 700;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+    <div class="item">6</div>
+    <div class="item">7</div>
+    <div class="item">8</div>
+    <div class="item">9</div>
+    <div class="item">10</div>
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script>
+    // function go(){
+
+    //     var nScrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+    //     $.each($(".item:not(.loaded)"), function(i, item) {
+
+    //         var nOffsetTop = $(item).offset().top;
+
+    //         var _h = $(item).height();
+
+    //         if ((nOffsetTop+_h) >= nScrollTop && nOffsetTop <= (nScrollTop + nHeight)) {
+
+    //             console.log($(item).html());
+
+    //             $(item).addClass("loaded");
+
+    //         }
+
+
+    //     });
+
+    // }
+
+    $(function() {
+
+
+        function go() {
+
+            var nHeight = $(window).height();
+
+            var nScrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+            $.each($(".item:not(.loaded)"), function(i, item) {
+
+                var nOffsetTop = $(item).offset().top;
+
+                var _h = $(item).height();
+
+                if ((nOffsetTop + _h) >= nScrollTop && nOffsetTop <= (nScrollTop + nHeight)) {
+
+                    console.log($(item).html());
+
+                    $(item).addClass("loaded");
+
+                }
+
+
+            });
+
+        }
+
+        go();
+
+
+
+        $(window).on("resize scroll", go);
+
+
+
+
+    });
+    </script>
+
+</body>
+
+</html>
