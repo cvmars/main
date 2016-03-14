@@ -1,5 +1,11 @@
 <?php
 
+echo "<pre>";
+
+print_r($_FILES);
+
+echo "</pre>";
+
 $username = $_POST["username"];
 
 $password = $_POST["password"];

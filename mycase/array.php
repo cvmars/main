@@ -2,6 +2,12 @@
 
 header("Content-Type:text/html;charset=utf8");
 
+session_start();
+
+print_r($_COOKIE);
+
+print_r($_SESSION);
+
 //查看数组
 //var_dump()  print_r()
 

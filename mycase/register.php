@@ -1,10 +1,22 @@
 <?php
 
+session_start();
+
 $username = $_POST["username"];
 
 $password = $_POST["password"];
 
 $password2 = $_POST["password2"];
+
+$vcode = strtolower($_POST["vcode"]);
+
+$vstr = strtolower($_SESSION['code']);
+
+if($vcode !== $vstr){
+
+    exit("验证码不正确");
+
+}
 
 if($username === ""){
 
