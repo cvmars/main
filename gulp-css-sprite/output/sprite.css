@@ -1,0 +1,65 @@
+/*
+Icon classes can be used entirely standalone. They are named after their original file names.
+
+```html
+<!-- `display: block` sprite -->
+<div class="icon-home"></div>
+
+<!-- `display: inline-block` sprite -->
+<img class="icon-home" />
+```
+*/
+.icon-arr_l {
+  background-image: url(sprite.png);
+  background-position: -15px -14px;
+  width: 5px;
+  height: 9px;
+}
+.icon-arr_l_disabled {
+  background-image: url(sprite.png);
+  background-position: -20px -14px;
+  width: 5px;
+  height: 9px;
+}
+.icon-arr_l_hover {
+  background-image: url(sprite.png);
+  background-position: -25px -14px;
+  width: 5px;
+  height: 9px;
+}
+.icon-arr_r {
+  background-image: url(sprite.png);
+  background-position: -30px 0px;
+  width: 5px;
+  height: 9px;
+}
+.icon-arr_r_disabled {
+  background-image: url(sprite.png);
+  background-position: -30px -9px;
+  width: 5px;
+  height: 9px;
+}
+.icon-arr_r_hover {
+  background-image: url(sprite.png);
+  background-position: -30px -18px;
+  width: 5px;
+  height: 9px;
+}
+.icon-icon_great {
+  background-image: url(sprite.png);
+  background-position: 0px 0px;
+  width: 15px;
+  height: 14px;
+}
+.icon-star_gray {
+  background-image: url(sprite.png);
+  background-position: -15px 0px;
+  width: 15px;
+  height: 14px;
+}
+.icon-star_light {
+  background-image: url(sprite.png);
+  background-position: 0px -14px;
+  width: 15px;
+  height: 14px;
+}
