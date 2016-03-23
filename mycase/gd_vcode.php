@@ -1,46 +1,72 @@
 <?php
 
-//php 验证码
-session_start();
+/**
+ * 图片验证码
+ * @param {$w} 宽
+ * @param {$h} 高
+ * @param {$fn} 验证码字体数量
+ * @param {$fs} 验证码字体大小
+ * @param {$internum｝干扰素数量
+ *
+ * @returns void
+*
+ * @date 2016-03-23
+ * @author jokerye
+*/
 
-//1.准备画布资源
-$im = imagecreatetruecolor(100, 50);
+function vcode($w,$h,$fn,$fs,$internum){
 
-//2.准备涂料
-$black = imagecolorallocate($im,0,0,0);
+    //php 验证码
+    session_start();
 
-$gray = imagecolorallocate($im,200,200,200);
+    //1.准备画布资源
+    $im = imagecreatetruecolor($w, $h);
 
-//背景填充
-imagefill($im,0,0,$gray);
+    //2.准备涂料
+    $black = imagecolorallocate($im,0,0,0);
 
-$x = (100-20*4)/2;
+    $gray = imagecolorallocate($im,200,200,200);
 
-$y = (50-20)/2+20;
+    //背景填充
+    imagefill($im,0,0,$gray);
 
-//3.在画布上画图像或文字
-$strarr = array_merge(range(0,9),range('a','z'),range('A','Z'));
+    for($i=0;$i<$internum;$i++){
 
-shuffle($strarr);
+        imagesetpixel($im,mt_rand(0,$w),mt_rand(0,$h),$black);
 
-$str = join('',array_slice($strarr,0,4));
+    }
 
-//把$str存入session
-$_SESSION['code']=$str;
+    $x = ($w-$fs*$fn)/2;
 
-$font = "msyh.ttf";
+    $y = ($h-$fs)/2+$fs;
 
-imagettftext($im, 20, 0, $x, $y, $black, $font, $str);
+    //3.在画布上画图像或文字
+    $strarr = array_merge(range(0,9),range('a','z'),range('A','Z'));
 
-//4.输出最终图像或保存最终图像
-header("content-Type:image/png");
+    shuffle($strarr);
 
-//保存png
-//imagepng($im,"gogo.png");
-imagepng($im);
+    $str = join('',array_slice($strarr,0,$fn));
 
-//5.释放画布资源
-imagedestroy($im);
+    //把$str存入session
+    $_SESSION['code']=$str;
+
+    $font = "msyh.ttf";
+
+    imagettftext($im, $fs, 0, $x, $y, $black, $font, $str);
+
+    //4.输出最终图像或保存最终图像
+    header("content-Type:image/png");
+
+    //保存png
+    //imagepng($im,"gogo.png");
+    imagepng($im);
+
+    //5.释放画布资源
+    imagedestroy($im);
+
+}
+
+vcode(200,50,6,20,10);
 
 
 ?>
