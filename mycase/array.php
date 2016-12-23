@@ -2,7 +2,23 @@
 
 header("Content-Type:text/html;charset=utf8");
 
+print_r($_COOKIE);
+
 session_start();
+
+echo $_SESSION['name'];
+
+echo 'gogo',"gogo22","<br>";
+
+$yeling = "haha";
+
+echo 'gogo$yeling';
+
+echo "gogo$yeling","<br>";
+
+//1001
+echo strtr("baab", "ab", "01"),"\n";
+
 
 print_r($_COOKIE);
 

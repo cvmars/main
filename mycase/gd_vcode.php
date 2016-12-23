@@ -14,7 +14,7 @@
  * @author jokerye
 */
 
-function vcode($w,$h,$fn,$fs,$internum){
+function vcode($w=200,$h=50,$fn=6,$fs=20,$internum=10){
 
     //php 验证码
     session_start();
@@ -66,7 +66,7 @@ function vcode($w,$h,$fn,$fs,$internum){
 
 }
 
-vcode(200,50,6,20,10);
+vcode();
 
 
 ?>

@@ -1,21 +1,39 @@
 <?php
 
-// phpinfo();
+// echo $_SERVER["REQUEST_URI"];
 
-echo "hello word";
+// $arr_url = parse_url("/act/9c892664c19877ccaf580362312596b4?id=22423");
 
-echo "<br />";
+// var_dump($arr_url);
 
-$arrayName = array("1" => "我是一", "2" => "我是二","3" => "我是三");
+// $path = explode('/',$arr_url['path']);
 
-//打印数组
-print_r($arrayName);
+// var_dump($path);
 
-var_dump($arrayName);
+// echo $path[2];
 
-//数组foreach
-foreach ($arrayName as $key => $value) {
-    echo $key.":".$value."<br>";
-}
+// echo substr($path,strripos($path,"/")+1);
 
-?>
+
+// $data = array ('a'=>1,'b'=>66,'c'=>3,'d'=>4,'e'=>5);
+
+// $callback = $_GET['callback'];
+
+// echo $callback.'('.json_encode($data).')';
+
+// exit;
+header('Content-type: application/json');
+
+$callback = isset($_GET['callback']) ? trim($_GET['callback']) : ''; //jsonp回调参数，必需
+
+$date = array("age"=>$_GET['age'], "message"=>$_GET['age']);
+
+$date["msg"]="err";
+
+$date["info"]="因人品问题，发送失败";
+
+$tmp= json_encode($date); //json 数据
+
+echo $callback . '(' . $tmp .')';  //返回格式，必需
+
+// echo md5(7);

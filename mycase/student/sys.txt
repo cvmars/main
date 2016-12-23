@@ -1,0 +1,36 @@
+学员和班级管理系统：
+功能分析
+学员：名字，年龄，身高，性别，身高，体重，属于哪个班级
+班级：名称
+关系：学员||班级   学员班号===班级的id编号发生关系
+
+1.设计表：
+学员表
+stu
+id int
+name varchar(30) 名称
+cid 班号
+sex int
+
+班级表
+cls
+id int
+name varchar(30) 名称
+
+2.准备sql语句
+create table stu(
+id int unsigned auto_increment primary key,
+name varchar(30),
+cid int,
+sex int
+);
+
+create table cls(
+id int unsigned auto_increment primary key,
+name varchar(30)
+);
+
+执行sql语句-》
+phpadmin 直接导入
+
+程序设计：

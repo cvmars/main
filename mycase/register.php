@@ -47,7 +47,7 @@ if($connection){
 
     $password = md5($password);
 
-    $sql = "INSERT INTO `userinfo` (`UserName`,`Password`) VALUES ('$username','$password')";
+    $sql = "INSERT INTO `userinfo1` (`UserName`,`Password`) VALUES ('$username','$password')";
 
     $result = mysql_query($sql);
 
