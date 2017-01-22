@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>有关事件回调传参</title>
+    <script src="vendor/avalon/avalon.js" type="text/javascript"></script>
+    <style>
+    </style>
+    <script>
+    avalon.ready(function() {
+
+        var vm = avalon.define({
+
+            $id: "go",
+
+            username: "lewis",
+
+            array: ["aaa", "bbb", "ccc"],
+
+            $skipArray: ["aaa", "cccd"],
+
+            array2: [
+                ["a", "b", "c"],
+                ["d", "e", "f"],
+                ["g", "h", "i"]
+            ]
+
+        });
+
+        avalon.define({
+
+            $id: "test",
+
+            num: [1, 2, 3],
+
+            data: ["a", "b", "c"]
+
+
+        });
+
+        avalon.define({
+
+            $id: "fruit",
+
+            options: ["苹果", "香蕉", "桃子", "雪梨", "葡萄", "哈蜜瓜", "橙子", "火龙果", "荔技", "黄皮"],
+
+            selected: "桃子"
+
+        });
+
+        var go = "{\"a\":1}";
+
+        avalon.log(avalon.parseJSON(go));
+
+        avalon.log(vm.array);
+
+        avalon.log(vm.$skipArray);
+
+        avalon.scan();
+
+    });
+    </script>
+</head>
+
+<body ms-controller="go">
+
+    <ul>
+        <li ms-repeat="array">{{el}} {{$index}}</li>
+    </ul>
+
+    <input ms-duplex="username">{{username}}
+
+
+    <ul ms-repeat="array2">
+        <li ms-repeat="el">
+            {{el}}-{{$index}} {{JSON.stringify($outer)}}
+        </li>
+    </ul>
+
+    <div ms-controller="test">
+        <div ms-repeat="num">
+            <strong ms-repeat="data">
+                {{el}}: {{$outer.el}}
+            </strong>
+        </div>
+    </div>
+
+    <div ms-important="fruit">
+
+        <input ms-duplex="selected">
+
+        <select ms-duplex="selected">
+
+            <option ms-repeat-option="options" ms-value="option">{{option}}</option>
+
+        </select>
+
+    </div>
+
+</body>
+
+</html>

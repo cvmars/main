@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>有关事件回调传参</title>
+    <script src="vendor/avalon/avalon.js" type="text/javascript"></script>
+    <style>
+    .tab-content {
+        width: 200px;
+        height: 200px;
+        margin: 20px;
+    }
+    .test {
+        width: 100px;
+        height: 100px;
+        border: 1px solid red;
+        color: red;
+        -webkit-user-select: none;
+        /* Chrome all / Safari all */
+        -moz-user-select: none;
+        /* Firefox all */
+        -ms-user-select: none;
+        /* IE 10+ */
+        -o-user-select: none;
+        user-select: none;
+    }
+    .aaa {
+        color: blue;
+        border: 1px solid blue;
+    }
+    .bbb{
+
+        color: #f60;
+        border: 1px solid #f60;
+
+    }
+    </style>
+    <script>
+    avalon.ready(function() {
+
+        var vm = avalon.define({
+
+            $id: "gogo",
+
+            aaa: true,
+
+            bbb: "@@@",
+
+            ccc: "&&&&",
+
+            username: "lewis",
+
+            switch1: false,
+
+            selectModel: "bbb",
+
+            sChange: function() {
+
+                avalon.log("select change");
+
+            },
+
+            prop: "red",
+
+            white: "#fff",
+
+            click: function() {
+
+                vm.aaa = !vm.aaa;
+
+            }
+
+        });
+
+        setTimeout(function() {
+
+            vm.switch1 = true;
+
+            vm.selectModel = "ccc";
+
+        }, 2000);
+
+        //
+        vm.$watch("selectModel", function() {
+
+            avalon.log("change");
+
+        });
+
+        var vm2 = avalon.define({
+
+            $id: "duplex",
+
+            username: "lewis",
+
+            userpassword: "123456",
+
+            userdesc: "这里是描述信息",
+
+            r1: false,
+
+            r2: true,
+
+            c1: [1, 2, 3, 4],
+
+            c2: [5, 6, 7, 8],
+
+            aaa: "http://www.baidu.com",
+
+            img_src: "http://img01.fn-mart.com/C/web/layout/kk/20151130/201511300920101448846410_kk-0.png",
+
+            click: function() {
+
+                vm2.username = "叶岭";
+
+                vm2.r1 = !vm2.r1;
+
+                vm2.r2 = !vm2.r2;
+
+            }
+
+        });
+
+        var vm3 = avalon.define({
+
+            $id: "word",
+
+            word: "hello avalon",
+
+            text: "<b> 1111  </b>",
+
+            zzz: "zzz",
+
+            num: 5,
+
+            bool: "bool",
+
+            click: function() {
+
+                var elem = avalon(this);
+
+                avalon.log(elem.data("bool"));
+
+            },
+
+            change: function() {
+
+                avalon.log(2222);
+
+            }
+
+        });
+
+        var vm4 = avalon.define({
+
+            $id: "tab",
+
+            currentIndex: 0,
+
+            toggle: function(index) {
+
+                vm4.currentIndex = index;
+
+            }
+
+        });
+
+        var vm5 = avalon.define({
+            $id: "ms-class",
+            toggle: true,
+            click: function(e) {
+                vm5.toggle = !vm5.toggle;
+            }
+        });
+
+
+        avalon.scan();
+    });
+    </script>
+</head>
+
+<body>
+
+    <div ms-controller="ms-class">
+        <div class="test" ms-class="aaa:toggle" ms-click="click" ms-hover="bbb">点我</div>
+    </div>
+
+    <div ms-controller="tab">
+
+        <input type="button" value="btn1" ms-click="toggle(0)">
+        <input type="button" value="btn2" ms-click="toggle(1)">
+        <input type="button" value="btn3" ms-click="toggle(2)">
+
+        <!-- <div class="tab-content" ms-visible="currentIndex === 0">1111</div>
+        <div class="tab-content" ms-visible="currentIndex === 1">2222</div>
+        <div class="tab-content" ms-visible="currentIndex === 2">3333</div> -->
+
+        <div class="tab-content" ms-if="currentIndex === 0">1111</div>
+        <div class="tab-content" ms-if="currentIndex === 1">2222</div>
+        <div class="tab-content" ms-if="currentIndex === 2">3333</div>
+
+    </div>
+
+    <div ms-controller="word">
+
+        <button ms-click="click" ms-data-bool="bool">111</button>
+
+        <!-- data-duplex-event 这个属性，当input发生改变 才changeword，不是时时的 -->
+        <input ms-duplex="word" data-duplex-event="change">
+
+        <h3>{{word}}!!</h3>
+
+        <div>
+            <em>用于测试是否被测除</em>xxxx{{text}}yyyy</div>
+        <div>
+            <em>用于测试是否被测除</em>xxxx{{text|html}}yyyy</div>
+        <div ms-text="text">
+            <em>用于测试是否被测除</em>xxxx yyyy</div>
+        <div ms-html="text">
+            <em>用于测试是否被测除</em>xxxx yyyy</div>
+
+        <input ms-value="text" />
+        <textarea ms-value="xxxxxxxx{{text+'!!'}}yyyyyyyy" /></textarea>
+
+        <!-- ms-data-duplex-observe  为false的时候，禁止双向绑定 -->
+        <input type="text" ms-duplex="zzz" ms-data-duplex-observe="zzz">{{zzz}}
+
+        <div ms-visible="10 - num > 0">{{num}}</div>
+        <input data-duplex-event="change" ms-duplex="num">
+
+    </div>
+
+    <div ms-controller="duplex">
+
+        <a ms-href="aaa" ms-title="aaa">aaa</a>
+
+        <img ms-src="img_src" ms-alt="userdesc">
+
+        <input type="text" ms-duplex="username">{{username}}
+
+        <input type="password" ms-duplex="userpassword">{{userpassword}}
+
+        <textarea name="t1" id="" cols="30" rows="10" ms-duplex="userdesc">
+
+            {{userdesc}}
+
+        </textarea>
+
+        <input type="button" value="点我" ms-click="click">
+
+        <!-- radio duplex为 bool -->
+        <input type="radio" name="a1" ms-duplex="r1">
+
+        <input type="radio" name="a1" ms-duplex="r2">
+
+        <!-- checkbox duplex为数组 -->
+        <input type="checkbox" ms-duplex="c1">111
+        <input type="checkbox" ms-duplex="c2">222
+
+        <select name="" id="">
+
+            <option value=""></option>
+
+        </select>
+
+    </div>
+
+
+    <div ms-controller="gogo">
+
+        <div ms-css-width="100" ms-css-height="100" ms-css-background-color="prop" ms-css-color="white" style="font-size:20px;">222</div>
+
+        <button type="button" ms-click="click">
+            点我
+        </button>
+
+        <input ms-enabled="aaa" name="a1" value="12345" />
+        <input ms-disabled="aaa" name="a2" value="67890" />
+        <input ms-readonly="aaa" name="a3" value="readonly" />
+
+        <input ms-checked="aaa" type="checkbox" value="checkbox" name="a4" />
+
+        <select name="a5">
+            <option>222</option>
+            <option ms-selected="aaa">555</option>
+        </select>
+        <input ms-attr-value="bbb + ccc" name="a6" value="改" />
+
+        <select ms-duplex="selectModel" ms-change="sChange">
+            <option value="aaa" selected>aaa</option>
+            <option value="bbb">bbb</option>
+            <option value="ccc">ccc</option>
+        </select>
+
+        <span ms-visible="switch1">11112222</span>
+
+        <span ms-if="switch1">334444</span>
+
+        <input ms-duplex="username">{{username}}
+
+    </div>
+
+</body>
+
+</html>

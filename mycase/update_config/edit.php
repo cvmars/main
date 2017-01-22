@@ -23,7 +23,7 @@ foreach ($a[1] as $k => $v) {
     echo "{$keyinfo[$v]}:<input type='text' name='{$v}' value='{$a[2][$k]}'>";
 }
 
-echo "<input type='submit' value='edit' />";
+echo "<input type='submit' value='save' />";
 echo "<input type='reset' value='reset' />";
 
 echo "</form>";

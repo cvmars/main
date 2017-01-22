@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Avalon by RubyLouvre</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="vendor/avalon/avalon.js"></script>
+
+    <script>
+    var vm = avalon.define({
+
+        $id: "watch",
+
+        aaa: 111,
+
+        bbb:"bbb",
+
+        ccc:"ccc"
+
+    });
+
+    //与属性名相关的回调
+    vm.$watch("aaa", function(newValue, oldValue) {
+
+        avalon.log(newValue+":"+oldValue);
+
+    });
+
+    setTimeout(function() {
+
+        vm.aaa = 222;
+
+    }, 2000);
+
+    //与属性名无关的回调 只能使用$fire来触发
+    vm.$watch("cat", function() {
+
+        avalon.log(avalon.slice(arguments)); //[1,2,3]
+
+    });
+
+    setTimeout(function(){
+
+         vm.$fire("cat",1,2,3);
+
+    }, 1000);
+
+    //监听所有属性的变化，回调前面多一个属性名  attrName 、newValue、oldValue
+    vm.$watch("$all",function(){
+
+        avalon.log(avalon.slice(arguments));
+
+    });
+
+    setTimeout(function(){
+
+         vm.bbb = "bbb2";
+
+         vm.ccc = "ccc2";
+
+    }, 1000);
+
+    avalon.scan();
+
+    </script>
+</head>
+
+<body>
+
+    <div ms-controller="watch">
+
+        <input type="text" ms-duplex="aaa">
+        <span>{{aaa}}</span>
+
+    </div>
+
+</body>
+
+</html>

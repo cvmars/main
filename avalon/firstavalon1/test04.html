@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>第一个avalon项目11</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="vendor/avalon/avalon.js"></script>
+
+</head>
+
+<body>
+
+    <div ms-controller="test">
+
+        <input ms-duplex="a" ms-focus="onFocus" ms-blur="onBlur" ms-keydown="keydown" ms-keydown="keyup" ms-mouseenter="enter" ms-mouseleave="leave">{{a}}
+        <p ms-click-1="onClick" ms-click-2="onClick2">{{a}}不会变</p>
+        <p>{{$b}}不会变</p>
+        <!-- <p>{{::c}}不会变</p> -->
+        <p ms-css-background-color="red" style="display:block;height:100px;">{{c}}会变</p>
+
+    </div>
+
+    <script>
+    var vm = avalon.define({
+
+        $id: "test",
+        a: 1,
+        $b: 2,
+        $skipArray: ["a"],
+        c: 3,
+        onClick:function(){
+          avalon.log(1);
+        },
+        onClick2:function(){
+          avalon.log(2);
+        },
+        onFocus:function(){
+          avalon.log("focus");
+        },
+        onBlur:function(){
+          avalon.log("blur");
+        },
+        enter:function(){
+          avalon.log("enter");
+        },
+        leave:function(){
+          avalon.log("leave");
+        },
+        keydown:function(){
+          avalon.log("keydown");
+        },
+        keyup:function(){
+          avalon.log("keyup");
+        }
+
+    });
+    setTimeout(function() {
+        vm.a = 100;
+        vm.$b = 100;
+        vm.c = 100;
+    }, 3000);
+    </script>
+
+</body>
+
+</html>

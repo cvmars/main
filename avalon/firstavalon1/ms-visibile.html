@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>第一个avalon项目11</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="vendor/avalon/avalon.js"></script>
+
+    </head>
+    <body>
+
+        <div ms-controller="test">
+            <p>First name: <input ms-duplex="firstName" /></p>
+            <p>Last name: <input ms-duplex="lastName"  /></p>
+            <p>Hello,    <input ms-duplex="fullName"></p>
+            <div>{{firstName}} | {{lastName}}</div>
+            <ul>
+                <li><input type="checkbox" ms-duplex-checked="checkAllbool"  data-duplex-changed="checkAll"/>Select All</li>
+                <li ms-repeat="arr" ><input type="checkbox" ms-attr-value="el" ms-duplex="selected" data-duplex-changed="checkOne"/>{{el}}</li>
+            </ul>
+        </div>
+
+        <div ms-controller="wrap">
+
+            {{a}}
+
+            <input ms-duplex="a">
+
+        </div>
+
+        <div ms-controller="wrap2">
+
+            {{a}}+{{b}}+{{c}}
+
+        </div>
+
+        <div ms-controller="list">
+
+            <span ms-mouseover="changeUl(1)">公告</span>
+            <span ms-mouseover="changeUl(0)">媒体报道</span>
+            <a ms-href="'#!/'+more_name">{{more_text}}</a>
+            <ul>
+                <li ms-repeat="infoList">
+                    <a ms-href="''+more_name+'/'+el.id" ms-title="el.title">{{el.title}}</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <script>
+
+        var gg = [{"id":"1","title":"标题1"},{"id":"2","title":"标题2"}];
+        var bd = [{"id":"3","title":"标题3"},{"id":"4","title":"标题4"}];
+
+        var vm = avalon.define({
+            $id:"list",
+            more_name:"gg",
+            more_text:"更多公告",
+            gg:gg,
+            bd:bd,
+            infoList:gg,
+            changeUl:function(flag){
+                if(flag){
+                    vm.more_name = "gg";
+                    vm.more_text ="更多公告";
+                    vm.infoList = vm.gg;
+                }else{
+                    vm.more_name = "bd";
+                    vm.more_text ="更多报道";
+                    vm.infoList = vm.bd;
+                }
+            }
+        });
+
+        var abc = avalon.define({
+            $id:"wrap",
+            a:"你好啊one"
+        });
+
+        var def = avalon.define({
+            $id:"wrap2",
+            a:"你好啊two",
+            b:"你呢，你好么",
+            c:abc.a
+        });
+
+        avalon.scan(); //让avalon扫描文档
+
+        var first = 0;
+                   var model = avalon.define({
+                       $id: "test",
+                       firstName: "John",
+                       lastName: "Smith",
+                       fullName: {//a object that contain set/get will be treated as an `PropertyDescriptor`,
+                           set: function(val) {//must use `this` to refer `scope` instead of using `scope` directly
+                               var array = (val || "").split(" ");
+                               this.firstName = array[0] || "";
+                               this.lastName = array[1] || "";
+                           },
+                           get: function() {
+                               return this.firstName + " " + this.lastName;
+                           }
+                       },
+                       arr: ["aaa", "bbb", "ccc", "ddd"],
+                       selected: ["bbb", "ccc"],
+                       checkAllbool: false,
+                       checkAll: function() {
+                           if (!first) {
+                               first++
+                               return
+                           }
+                           if (this.checked) {
+                               model.selected = model.arr
+                           } else {
+                               model.selected.clear()
+                           }
+                       },
+                       checkOne: function() {
+                           var bool = this.checked
+                           if (!bool) {
+                               model.checkAllbool = false
+                           } else {
+                               model.checkAllbool = model.selected.size() === model.arr.length
+                           }
+                       }
+                   })
+        </script>
+
+    </body>
+</html>

@@ -6,6 +6,6 @@ define("HOST","localhost");
 
 define("USER","root");
 
-define("PASS","123");
+define("PASS","123567");
 
-define("DBNAME","test");
+define("DBNAME","test123456789");

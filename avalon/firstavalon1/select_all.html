@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>全选全不选</title>
+    <script src="vendor/avalon/avalon.js" type="text/javascript"></script>
+    <style>
+    </style>
+    <script>
+    avalon.ready(function() {
+
+        var vm = avalon.define({
+
+            $id: "go",
+
+            data: [{
+                checked: false,
+                content: "aaa"
+            }, {
+                checked: false,
+                content: "ccc"
+            }, {
+                checked: false,
+                content: "ccc"
+            }],
+
+            allchecked: false,
+
+            checkAll: function() {
+
+                var bool = this.checked;
+
+                vm.data.forEach(function(el) {
+
+                    el.checked = bool;
+
+                });
+
+            },
+
+            checkOne: function() {
+
+                if (!this.checked) {
+
+                    vm.allchecked = false;
+
+                } else { //avalon已经为数组添加了ecma262v5的一些新方法
+
+                    vm.allchecked = vm.data.every(function(el) {
+
+                        return el.checked;
+
+                    });
+                }
+            }
+
+        });
+
+        avalon.scan();
+
+    });
+    </script>
+</head>
+
+<body ms-controller="go">
+
+    <input type="radio" ms-checked="true">
+
+    <input type="checkbox" ms-duplex-radio="allchecked" data-duplex-changed="checkAll">全选
+
+    <ul>
+        <li ms-repeat="data">
+
+            <input type="checkbox" ms-duplex-radio="el.checked" ms-data-index=$index data-duplex-changed="checkOne">{{el.content}}
+
+        </li>
+    </ul>
+
+</body>
+
+</html>

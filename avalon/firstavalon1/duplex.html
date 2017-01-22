@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="vendor/avalon/avalon.js"></script>
+    <style>
+    .green {
+        background: green;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div ms-controller="duplex">
+
+
+        <input ms-duplex="a">{{a}}
+
+        <div ms-class="green: array.length" style="width:400px;height:200px">
+
+            <button ms-click="add" type="button">add</button>
+
+            <button ms-click="remove" type="button">remove</button>
+
+        </div>
+
+
+    </div>
+
+    <div ms-controller="todolist">
+
+        <form ms-on-submit="add">
+            <div class="form-group">
+                <label>
+                    <input type="text" ms-duplex="txt">
+                </label>
+            </div>
+        </form>
+        <p ms-if="todolist.size() >0">
+            现在有{{todolist.size()}}个
+        </p>
+        <ol>
+            <li ms-repeat="todolist">
+                {{el}}
+                <a href="javascript:;" ms-click="$remove">xxxx</a>
+            </li>
+        </ol>
+
+    </div>
+
+    <div ms-controller="event">
+
+       <input type="checkbox" ms-duplex="arr" value="111">111
+
+       <input type="checkbox" ms-duplex="arr" value="222">222
+
+       <input type="checkbox" ms-duplex="arr" value="333">333
+
+       <p>{{arr}}</p>
+
+       <input type="radio" ms-duplex-text="str" value="male">男
+       <input type="radio"  ms-duplex-text="str" value="female">女
+
+       <p>{{str}}</p>
+
+    </div>
+
+    <script>
+    avalon.ready(function() {
+
+        avalon.define({
+
+            $id: "event",
+
+            arr: [],
+
+            str:"male"
+        });
+
+        var vm = avalon.define({
+
+            $id: "duplex",
+
+            array: [],
+
+            a: 1,
+
+            $skipArray: ["b"],
+
+            add: function() {
+
+                vm.array.push(1);
+
+            },
+
+            remove: function() {
+
+                vm.array.pop();
+
+            }
+
+
+        });
+
+        var vm2 = avalon.define({
+
+            $id: "todolist",
+
+            txt: "",
+
+            todolist: [],
+
+            add: function(e) {
+
+                e.preventDefault();
+
+                !!vm2.txt.trim() && vm2.todolist.push(vm2.txt);
+
+                vm.txt = "";
+
+            }
+
+        });
+
+        avalon.log(avalon.type(1));
+
+        avalon.log(avalon.range(10));
+
+        avalon.log(1, 2, 3, 4);
+
+        function log() {
+
+            return avalon.log.apply(avalon, arguments);
+
+        }
+
+        log(3, 2, 3, 4);
+
+        avalon.scan();
+
+    });
+    </script>
+
+</body>
+
+</html>

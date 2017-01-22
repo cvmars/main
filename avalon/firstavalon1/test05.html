@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="vendor/avalon/avalon.js"></script>
+</head>
+
+<body>
+    <div ms-controller="box">
+        <div style=" background: #a9ea00;" ms-css-width="w" ms-css-height="h" ms-click="click"></div>
+        <p>{{ w }} x {{ h }}</p>
+        <p>W:
+            <input type="text" ms-duplex="w" data-duplex-event="change" />
+        </p>
+        <p>H:
+            <input type="text" ms-duplex="h" />
+        </p>
+        <ul ms-each="simpleArray">
+            <li>{{el}}</li>
+        </ul>
+    </div>
+
+    <!-- ms-skip -->
+    <div ms-controller="AAA" ms-skip>
+        <div>{{name}} : {{color}}</div>
+        <div ms-controller="BBB">
+            <div>{{name}} : {{color}}</div>
+            <div ms-controller="CCC">
+                <div>{{name}} : {{color}}</div>
+            </div>
+            <div ms-important="DDD">
+                <div>{{name}} : {{color}}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入内部和外部文件 -->
+    <script type="avalon" id="tpl">
+    here, {
+        {
+            3 + 6 * 5
+        }
+    }
+    </script>
+
+    <div ms-controller="template">
+        <p>{{xxx}}</p>
+        <div ms-include="'tpl'"></div>
+        <div ms-include-src="'ms-include-src.html'" data-include-loaded="loadCallBack1"></div>
+        <ul>
+            <li ms-repeat="array" ms-click="$remove" data-repeat-rendered="func1">
+                {{el}}  {{$index}}
+            </li>
+        </ul>
+    </div>
+    <!-- /引入内部和外部文件 -->
+
+    <!-- ms-text ms-html     ms-attr、ms-css、ms-include、ms-class、 ms-href、 ms-title、ms-src-->
+    <div ms-controller="texthtml">
+        <div class="go" ms-class-0="haha" ms-class-1="haha2"><em>用于测试是否被测除</em>xxxx{{text}}yyyy</div>
+        <div><em>用于测试是否被测除</em>xxxx{{text|html}}yyyy</div>
+        <div ms-text="text"><em>用于测试是否被测除</em>xxxx yyyy</div>
+        <div ms-html="text"><em>用于测试是否被测除</em>xxxx yyyy</div>
+        <a href="http://www.baidu.com" ms-href="{{go}}">www.baidu.com</a>
+    </div>
+    <!-- /ms-text ms-html -->
+
+    <script>
+    avalon.ready(function() {
+
+        avalon.define({
+
+          $id:"texthtml",
+
+          text:"<b>11111</b>",
+
+          go:"http://www.jd.com/"
+
+        });
+
+        avalon.define({
+            $id: "template",
+            xxx: "引入内部模板",
+            array:["a","b","c","d"],
+            loadCallBack:function(){
+
+                avalon.log("外部文件引入成功回调1");
+
+            },
+
+            func1:function(){
+
+                avalon.log("delete");
+
+            }
+        });
+
+        // vm viewModel 视图模型
+
+        var vm = avalon.define({
+            $id: "box",
+            w: 100,
+            h: 100,
+            simpleArray: [1, 2, 3, 4, 5],
+            click: function() {
+                vm.w = parseFloat(vm.w) + 10;
+                vm.h = parseFloat(vm.h) + 10;
+            }
+        });
+
+        avalon.define({
+            $id: "AAA",
+            name: "liger",
+            color: "green"
+        });
+        avalon.define({
+            $id: "BBB",
+            name: "sphinx",
+            color: "red"
+        });
+        avalon.define({
+            $id: "CCC",
+            name: "dragon" //不存在color
+        });
+        avalon.define({
+            $id: "DDD",
+            name: "sirenia" //不存在color
+        });
+
+        avalon.scan();
+    });
+    </script>
+</body>
+
+</html>

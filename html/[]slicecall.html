@@ -72,6 +72,16 @@
     });
     console.log(sum);    // 28
 
+    var cars = ['Mercedes-benz','BMW','Audi','Tesla'];
+
+    cars.every(function(item, index, arr){return item.length>4});       // false
+    cars.some(function(item, index, arr){return item.length>4});        // true
+    cars.filter(function(item, index, arr){return item.length>4});      // ["Mercedes-benz", "Tesla"]
+    cars.map(function(item, index, arr){return 'New-' + item});         // ["New-Mercedes-benz", "New-BMW", "New-Audi", "New-Tesla"]
+    cars.forEach(function(item, index, arr){
+        // code
+    });
+
     </script>
 </body>
 
